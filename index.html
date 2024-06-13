@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera App</title>
+    <style>
+        video,
+        canvas {
+            width: 100%;
+            height: 300px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            position: relative;
+            bottom: 0;
+            left: 0;
+            background-color: rgb(22, 204, 195);
+        }
+
+        .img_bg_camera img {
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="data:image/png;base64,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"
+        alt="">
+    <div class="publish">
+        <video id="videoElement"></video>
+        <canvas style="display: none" id="canvasCamera"></canvas>
+        <div id="imgBgCamera" class="img_bg_camera">
+            <img id="imgElement" class="tx_img" />
+        </div>
+        <button id="openCameraBtn">打开摄像头</button>
+        <button id="closeCameraBtn">关闭摄像头</button>
+        <button id="setImageBtn">拍照</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const videoElement = document.getElementById('videoElement');
+            const canvas = document.getElementById('canvasCamera');
+            const imgElement = document.getElementById('imgElement');
+            const openCameraBtn = document.getElementById('openCameraBtn');
+            const closeCameraBtn = document.getElementById('closeCameraBtn');
+            const setImageBtn = document.getElementById('setImageBtn');
+            let mediaStreamTrack = null;
+            let videoStream = '';
+
+            function getCamera() {
+                canvas.getContext('2d');
+
+                if (navigator.mediaDevices === undefined) {
+                    navigator.mediaDevices = {};
+                }
+
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices = {};
+                    const getUserMedia = (constraints) =>
+                        new Promise((resolve, reject) => {
+                            // 针对旧版浏览器使用navigator.getUserMedia
+                            navigator.getUserMedia = navigator.getUserMedia ||
+                                navigator.webkitGetUserMedia ||
+                                navigator.mozGetUserMedia ||
+
+                                navigator.msGetUserMedia;
+
+                            if (!navigator.getUserMedia) {
+                                reject(new Error('getUserMedia is not supported'));
+                            } else {
+                                navigator.getUserMedia(constraints, resolve, reject);
+                            }
+                        });
+
+                    navigator.mediaDevices.getUserMedia = getUserMedia;
+                }
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then((stream) => {
+                        mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[0];
+                        videoStream = stream;
+                        videoElement.srcObject = stream;
+                        videoElement.play();
+                    })
+                    .catch(err => console.error(err));
+            }
+
+            function setImage() {
+                canvas.getContext('2d').drawImage(videoElement, 0, 0, 200, 100);
+                const image = canvas.toDataURL('image/png');
+                imgElement.src = image;
+                // 如果需要模拟Vue的$emit，可以在这里调用一个全局函数或处理数据更新
+            }
+
+            function closeVideoStream() {
+                if (videoStream) {
+                    videoStream.getTracks()[0].stop();
+                }
+            }
+
+            openCameraBtn.addEventListener('click', getCamera);
+            closeCameraBtn.addEventListener('click', closeVideoStream);
+            setImageBtn.addEventListener('click', setImage);
+
+            // 如果需要模拟mounted生命周期，可以在这里调用getCamera
+            getCamera();
+        });
+    </script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.1/eruda.min.js"></script>
+    // 初始化
+    <script>eruda.init()</script>
+</body>
+
+</html>
