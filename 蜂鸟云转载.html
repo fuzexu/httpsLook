@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <script>
+    function* main() {
+      const res1 = yield fn1('开始')
+      const res2 = yield fn2(res1)
+    }
+
+    const task = main()
+    task.next()
+    var QAMap
+
+    function fn1(data) {
+      let Qyscripts = document.getElementsByTagName('script');
+      console.log(Qyscripts);
+      let QyscriptElement = document.createElement('script');
+      QyscriptElement.type = 'text/javascript';
+      QyscriptElement.async = false;
+      QyscriptElement.src = './jsapi.js';
+      Qyscripts[0].before(QyscriptElement);
+
+      QyscriptElement.addEventListener('load', function () {
+        QAMap = new AMap.Map("maps", {
+          viewMode: "3D",
+          zoom: 7,
+          center: [119.161721, 36.707668], //潍坊市中心坐标
+        })
+        console.log('QAMap', QAMap);
+        if (QAMap) {
+          task.next('fn1执行完毕')
+        }
+      });
+    }
+
+    function fn2(data) {
+        task.next('fn2执行完毕')
+    }
+
+
+  </script>
+</head>
+
+<body>
+  <div id="maps"></div>
+</body>
+
+</html>

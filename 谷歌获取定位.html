@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    (function () {
+        console.log('window.navigator',window.navigator);
+        if (window.navigator.geolocation) {
+            window.navigator.geolocation.getCurrentPosition(
+                //成功回调函数
+                function (position) {
+                    console.log(position)
+                },
+                //失败回调函数
+                e => {
+                    console.log('失败了', e)
+                }
+            )
+        } else {
+            alert('不支持')
+        }
+    })
+</script>
+
+</html>

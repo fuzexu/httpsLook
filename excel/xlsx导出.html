@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+</head>
+
+<body>
+    <table id="tbl_exporttable_to_xls" border="1">
+        <thead>
+            <th>Sr</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Job Profile</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>
+                    <p>Amit Sarna</p>
+                </td>
+                <td>Florida</td>
+                <td>Data Scientist</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>
+                    <p>Sagar Gada</p>
+                </td>
+                <td>California</td>
+                <td>Sr FullStack Dev</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>
+                    <p>Ricky Marck</p>
+                </td>
+                <td>Nevada</td>
+                <td>Sr .Net Dev</td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="ExportToExcel('xlsx')">Export table to excel</button>
+    <script>
+        function ExportToExcel(type, fn, dl) {
+            var ws = XLSX.utils.aoa_to_sheet(["SheetJS".split(""), [5, 4, 3, 3, 7, 9, 5]]);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Data");
+            return dl ?
+                XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container">
+        <video id="video-local" autoplay playsinline></video>
+        <!-- <button id="showVideo">打开摄像头</button> -->
+        <button id="stopVideo">关闭摄像头</button>
+
+        <button id="b320">320x240</button>
+        <button id="b640">640x480</button>
+        <button id="b1280">1280x720</button>
+        <button id="b1920">1920x1080</button>
+        <button id="b2048">2048x1152</button>
+    </div>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script>
+        // document.querySelector('#showVideo').addEventListener('click', openCamera);
+        document.querySelector('#stopVideo').addEventListener('click', stopVideo);
+
+        document.querySelector('#b320').onclick = () => {
+            console.log('320x240');
+            let constraints = window.constraints = {
+                audio: false,
+                video: { width: { exact: 320 }, height: { exact: 240 } }
+            };
+            newOpenCamera()
+        };
+        document.querySelector('#b640').onclick = () => {
+            let constraints = window.constraints = {
+                audio: false,
+                video: { width: { exact: 640 }, height: { exact: 480 } }
+            };
+            newOpenCamera()
+        };
+
+        document.querySelector('#b1280').onclick = () => {
+            let constraints = window.constraints = {
+                audio: false,
+                video: { width: { exact: 1280 }, height: { exact: 720 } }
+            };
+            newOpenCamera()
+        };
+
+
+
+        document.querySelector('#b1280').onclick = () => {
+            let constraints = window.constraints = {
+                audio: false,
+                video: { width: { exact: 1280 }, height: { exact: 720 } }
+            };
+            newOpenCamera()
+        };
+
+        document.querySelector('#b1920').onclick = () => {
+            let constraints = window.constraints = {
+                audio: false,
+                video: { width: { exact: 1920 }, height: { exact: 1080 } }
+            };
+            newOpenCamera()
+        };
+
+        document.querySelector('#b2048').onclick = () => {
+            let constraints = window.constraints = {
+                audio: false,
+                video: { width: { exact: 2048 }, height: { exact: 1152 } }
+            };
+            newOpenCamera()
+        };
+
+
+        function showErrMsg(msg, error) {
+            const errorElement = document.querySelector('#errorMsg');
+            errorElement.innerHTML += `<p>${msg}</p>`;
+            if (typeof error !== 'undefined') {
+                console.error(error);
+            }
+        }
+        function newOpenCamera(params) {
+            console.log('stream', window.stream);
+            if (window.stream) {
+                stopVideo()
+            }
+
+            openCamera()
+        }
+        function showMsg(msg) {
+            console.log(msg);
+        }
+        async function openCamera(e) {
+            try {
+                showMsg('正在打开摄像头');
+                console.log('constraints: ' + JSON.stringify(constraints));
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                showMsg('获取到了stream');
+                gotStream(stream);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        function gotStream(stream) {
+            const videoEle = document.querySelector('video');
+            const videoTracks = stream.getVideoTracks();
+            showMsg(`正在使用的设备: ${videoTracks[0].label}`);
+            window.stream = stream;
+            videoEle.srcObject = stream;
+        }
+        function stopVideo(e) {
+            showMsg("停止视频");
+            const videoElem = document.querySelector('video');
+            const stream = videoElem.srcObject;
+
+            if (stream == null) {
+                return;
+            }
+            const tracks = stream.getTracks();
+
+            tracks.forEach(function (track) {
+                track.stop();
+            });
+            videoElem.srcObject = null;
+        }
+    </script>
+</body>
+
+</html>

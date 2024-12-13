@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>自定义事件</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+        html,
+        body,
+        #container {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" tabindex="0"></div>
+    <div class="input-card" style="width:18rem">
+        <h4>自定义事件的绑定与解绑</h4>
+        <div>
+            <div class="input-item">
+                <button id="bt1" class="btn" style="margin-right:1rem;">绑定事件</button>
+                <button id="bt2" class="btn">解绑事件</button>
+            </div>
+        </div>
+    </div>
+    <div class="info" id="tip">
+        给地图绑定自定义的count事件，实现新增marker点的计数<br>
+        <span id="count">总共添加了0个Marker.</span>
+    </div>
+    <!-- <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=您申请的key值"></script> -->
+    <!-- <script src="./jsapi.js"></script> -->
+    <!-- <script src="./maptest.js"></script> -->
+    <script type="text/javascript">
+        let scriptElement = document.createElement('script');
+        scriptElement.type = 'text/javascript';
+        scriptElement.async = false;
+        scriptElement.src = './maptest.js';// 加载脚本
+        document.head.appendChild(scriptElement); // 加载脚本
+
+        scriptElement.addEventListener('error', function () {
+            console.error(`依赖脚本加载失败[${scriptElementw.src}]!`);
+        });
+        let aaa = new Promise((resolve, reject) => {
+            scriptElement.addEventListener('load', function () {
+                try {
+                    console.log('window', window);
+                    console.log('this', this);
+
+
+                    var map = new AMap.Map('container', {
+                        zoom: 10,
+                        center: [116.39, 39.9]
+                    });
+                    var count = 0;
+                    var _onClick = function (e) {
+                        new AMap.Marker({
+                            position: e.lnglat,
+                            map: map
+                        })
+                        map.emit('count', { count: count += 1 });//触发自定义事件
+                    }
+                    var countDiv = document.getElementById('count');
+                    var _onCount = function (e) {
+                        countDiv.innerHTML = "总共添加了" + e.count + "个Marker.";
+                    }
+                    map.on("count", _onCount); //绑定自定义事件
+
+                    var bind = function () {
+                        remove();//防止重复绑定
+                        map.on("click", _onClick);//绑定地图事件
+                    }
+                    var remove = function () {
+                        map.off('click', _onClick);//移除地图事件
+                    }
+                    //绑定Dom事件
+                    var button1 = document.getElementById('bt1');
+                    var listener1 = button1.addEventListener('click', bind);//给div绑定单击事件
+                    var button2 = document.getElementById('bt2');
+                    var listener2 = button2.addEventListener('click', remove);
+                    // this.amap = this.amap || new AMap.Map('container');
+                    // if (this.amap) {
+                    //     resolve(this)
+                    // }
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        })
+        console.log(aaa);
+
+        // var map = new AMap.Map('container', {
+        //     zoom: 10,
+        //     center: [116.39, 39.9]
+        // });
+        // var count = 0;
+        // var _onClick = function (e) {
+        //     new AMap.Marker({
+        //         position: e.lnglat,
+        //         map: map
+        //     })
+        //     map.emit('count', { count: count += 1 });//触发自定义事件
+        // }
+        // var countDiv = document.getElementById('count');
+        // var _onCount = function (e) {
+        //     countDiv.innerHTML = "总共添加了" + e.count + "个Marker.";
+        // }
+        // map.on("count", _onCount); //绑定自定义事件
+
+        // var bind = function () {
+        //     remove();//防止重复绑定
+        //     map.on("click", _onClick);//绑定地图事件
+        // }
+        // var remove = function () {
+        //     map.off('click', _onClick);//移除地图事件
+        // }
+        // //绑定Dom事件
+        // var button1 = document.getElementById('bt1');
+        // var listener1 = button1.addEventListener('click', bind);//给div绑定单击事件
+        // var button2 = document.getElementById('bt2');
+        // var listener2 = button2.addEventListener('click', remove);
+    </script>
+</body>
+
+</html>

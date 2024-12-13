@@ -1,0 +1,42 @@
+<template>
+    <div class="test">
+        <div class="qrcode" v-for="(item, index) in 2" :key="item">
+            <canvas :ref="'qrcodeCanvas' + index" :data-valww="item"></canvas>
+        </div>
+    </div>
+</template>
+<script>
+    // 引用
+    import QRcode from "qrcode";
+    export default {
+        mounted() {
+            console.log(this.$refs);
+            console.log(this.$refs.qrcodeCanvas0[0].dataset.valww); //0
+            console.log(this.$refs.qrcodeCanvas1[0].dataset.valww); //1
+            QRcode.toCanvas(
+                this.$refs.qrcodeCanvas0[0],
+                this.$refs.qrcodeCanvas0[0].dataset.valww,
+                {
+                    width: 200, //自定义宽度
+                    color: {
+                        dark: "#00f", //自定义码的颜色
+                        light: "#fbb", //自定义背景颜色
+                    },
+                }
+            );
+            QRcode.toCanvas(
+                this.$refs.qrcodeCanvas1[0],
+                this.$refs.qrcodeCanvas1[0].dataset.valww,
+                {
+                    width: 200, //自定义宽度
+                    color: {
+                        dark: "#00f", //自定义码的颜色
+                        light: "#fbb", //自定义背景颜色
+                    },
+                }
+            );
+        },
+    };
+</script>
+
+<style lang="less" scoped></style>

@@ -1,0 +1,36 @@
+<script language="javascript" type="text/javascript">
+
+
+    //读文件
+    function readFile(filename) {
+        var fso = new ActiveXObject("Scripting.FileSystemObject");
+        var f = fso.OpenTextFile(filename, 1);
+        var s = "";
+        while (!f.AtEndOfStream)
+            s += f.ReadLine() + "/n";
+        f.Close();
+        return s;
+    }
+
+    //写文件
+    function writeFile(filename, filecontent) {
+        var fso, f, s;
+        fso = new ActiveXObject("Scripting.FileSystemObject");
+        f = fso.OpenTextFile(filename, 8, true);
+        f.WriteLine(filecontent);
+        f.Close();
+        alert('ok');
+    }
+
+</script>
+<html>
+<input type="text" id="in" name="in" />
+<!-- "C:/Users/fuzex/Desktop/下载说明/共青大观园网格-酒店-企业去重后69条数据.xls" -->
+<input type="button" value="Write!"
+    onclick="writeFile('C:/Users/fuzex/Desktop/下载说明/共青大观园网格-酒店-企业去重后69条数据.xls',document.getElementByIdx_x('in').value);" /><br><br>
+<input type="button" value="Read!"
+    onclick="document.getElementById('show').value=readFile('C:/Users/fuzex/Desktop/下载说明/共青大观园网格-酒店-企业去重后69条数据.xls');" /><br>
+<textarea id="show" name="show" cols="100" rows="20">
+    </textarea>
+
+</html>

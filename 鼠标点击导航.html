@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>位置经纬度 + 驾车规划路线</title>
+    <style type="text/css">
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <style type="text/css">
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+
+        #panel .amap-call {
+            background-color: #009cf9;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        #panel .amap-lib-driving {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        window._AMapSecurityConfig = {
+            securityJsCode: '74311c26548eab5f0836a0e58a209ef0',
+        }
+    </script>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=2.0&key=b313fdb3684488ba9b6d1891a6f594af&plugin=AMap.Driving,AMap.ToolBar,AMap.Autocomplete,AMap.PlaceSearch"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+</head>
+
+<body>
+    <div id="container"></div>
+    <div class="info" id="text">
+        <input type="text" id="start" placeholder="单击左键获取起点位置">
+        <input type="text" id="end" placeholder="单击右键获取终点位置">
+        <button id="btn">查询路线</button>
+    </div>
+    <div id="panel"></div>
+    <script type="text/javascript">
+        // window._AMapSecurityConfig = {
+        //     securityJsCode: '74311c26548eab5f0836a0e58a209ef0',
+        // }
+        // //基本地图加载
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            center: [121.548181, 29.806906],
+            zoom: 13
+        });
+
+        //构造路线导航类
+        var driving = new AMap.Driving({
+            map: map,
+            // panel: "panel"
+        });
+
+        //默认路线;
+        var start = '121.546266,29.80975';
+        var end = '121.549957,29.809508';
+        getGis(start, end);
+
+        document.querySelector("#btn").onclick = function getLngLat() {
+            var start1 = document.querySelector("#start").value;
+            var end1 = document.querySelector("#end").value;
+            getGis(start1, end1);
+        }
+
+        /*  AMap.event.addListener(map, "click", function (e) {
+         console.log(e)
+         });*/
+
+        map.on("click", function (e) {
+            var lnglat = e.lnglat.getLng() + "," + e.lnglat.getLat();
+            console.log(lnglat);
+            document.querySelector("#start").value = lnglat;
+        });
+
+        map.on("rightclick", function (e) {
+            var lnglat = e.lnglat.getLng() + "," + e.lnglat.getLat();
+            console.log(lnglat);
+            document.querySelector("#end").value = lnglat;
+        });
+
+        //计算起始点的路线规划;
+        function getGis(start, end) {
+            var lng1 = start.split(',')[0];
+            var lat1 = start.split(',')[1];
+            var lng2 = end.split(',')[0];
+            var lat2 = end.split(',')[1];
+
+            // 根据起终点经纬度规划驾车导航路线
+            driving.search(new AMap.LngLat(lng1, lat1), new AMap.LngLat(lng2, lat2), function (status, result) {
+                // result 即是对应的驾车导航信息
+                console.log(status, result);
+                console.log(result.routes[0].distance + '米');
+                console.log(parseFloat(result.routes[0].time / 60).toFixed(2) + '分钟');
+                if (status === 'complete') {
+                    
+                    console.log(result);
+
+                    log.success('绘制驾车路线完成')
+                } else {
+                    log.error('获取驾车数据失败：' + result)
+                }
+            });
+        }
+        // var map, route, marker;
+        //基本地图加载
+        // map = new AMap.Map("container", {
+        //     resizeEnable: true
+        // });
+
+        //绘制初始路径
+        // var path = [];
+        // path.push([121.608693, 29.913687]);
+        // path.push([121.615324, 29.914654]);
+        // path.push([121.612749, 29.916198]);
+
+        // map.plugin("AMap.DragRoute", function () {
+        //     route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE); //构造拖拽导航类
+        //     route.search(); //查询导航路径并开启拖拽导航
+
+        //     route.on('complete', function () {
+        //         console.log(route.getRoute());
+        //     })
+        // });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form role="form" action="#" method="get" th:action="@{/url1/}" id="myFrom">
+        <input type="text" name="name" value="123" />
+        <button type="button" οnclick="exportlist();">button</button>
+    </form>
+    <script type="text/javascript">
+        function exportlist() {
+            document.forms.myFrom.action = "/url2";
+            document.forms.myFrom.submit();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .fixed-width {
+            width: 200px;
+        }
+
+        .flex-grow {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="fixed-width">固定宽度</div>
+        <div class="flex-grow" id="flex-grow" >剩余宽度</div>
+        <input type="button" name="Submit" οnclick="javascript:history.back(-1);" value="返回上一页">
+
+    </div>
+</body>
+<script>
+    const captureButton = document.getElementById('flex-grow');
+
+    captureButton.addEventListener('click', async () => {
+        console.log(123);
+         window.history.back(-1);
+    })
+</script>
+
+</html>

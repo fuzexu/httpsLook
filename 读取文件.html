@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="fileBtn" />
+</body>
+<script>
+    function parseCustomFormat(arrayBuffer) {
+        const uint8View = new Uint8Array(arrayBuffer);
+        let offset = 0;
+
+        // 解析头部信息
+        const headerLength = uint8View[offset++];
+        const header = new TextDecoder().decode(uint8View.slice(offset, offset + headerLength));
+        offset += headerLength;
+
+        // 解析主体数据
+        const dataSize = uint8View[offset++] << 8 | uint8View[offset++]; // 假设数据大小由两个字节组成
+        const dataView = new DataView(arrayBuffer, offset, dataSize);
+        console.log(dataView,dataView);
+        // ...进一步解析dataView中的数据...
+
+        return { header}; // 返回解析结果
+    }
+    let fileBtn = document.getElementById('fileBtn')
+    fileBtn.onchange = function () {
+        let fileBtnV = fileBtn.files[0];
+        console.log('fileBtn', fileBtnV);
+        let reader = new FileReader();
+        console.log(reader);
+        reader.onload = function (e) {
+            let arrayBuffer = reader.result; // 这里也可以使用 e.target.result 拿到文件内容
+            console.log(arrayBuffer); // 你好
+            // const arrayBuffer = new ArrayBuffer(16);
+            console.log(parseCustomFormat(arrayBuffer));
+        }
+        reader.readAsArrayBuffer(fileBtnV);
+    }
+
+</script>
+
+</html>

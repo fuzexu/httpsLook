@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>测试</title>
+</head>
+
+<body>
+    <input id="num_one" type="text" /> + <input id="num_two" type="text" /> = <input id="num_res" type="text" />
+    <button id="btn">计算</button>
+    <script>
+        document.getElementById('btn').onclick = function () {
+            getData();
+        }
+
+        function getData() {
+            // 第一步： 创建xhr对象
+            let xhr = new XMLHttpRequest();
+            // 第二步： 调用open函数
+            xhr.open('POST', 'http://panji.qingyun.prod/geohub/getData')
+            // 第三步： 设置Content-Type属性 （这一步是固定的写法）
+            xhr.setRequestHeader('Conten-Type', 'application/x-www-form-urlencoded')
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
+            // 第四步： 调用send（）函数，同时将数据以查询字符串的形式，提交给服务器
+            xhr.send(JSON.stringify({
+                dataset_id
+                    :
+                    "98372a55-4011-4c95-bfce-e8d5949190b1",
+                conditions: {
+                    'relation'
+                        :
+                        "or",
+                    "conditions": [{
+                        field
+                            :
+                            "towncode",
+                        operation
+                            :
+                            "equal",
+                        value
+                            :
+                            "531.0014.1020"
+                    }]
+                }
+            }))
+            // 第五步：监听onreadystatechange事件
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText)
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

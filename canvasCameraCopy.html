@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera App</title>
+    <style>
+        .capture_buttonsbox {
+            height: 80px;
+            width: 100%;
+            position: absolute;
+            bottom: 16px;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .capture_confirm1 {
+            background: linear-gradient(#F7F2F6, #B2AC9E);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3), 0 5px 5px rgba(0, 0, 0, 0.5);
+            border-radius: 24px;
+            height: 50px;
+            width: 50px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 16px;
+            z-index: 1001;
+
+
+
+        }
+
+        .capture_confirm1:hover {
+            cursor: pointer;
+        }
+
+        .capture_confirm1:active {
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.3), 0 5px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .capture_confirm2 {
+            height: 30px;
+            width: 30px;
+            border-radius: 24px;
+            background: linear-gradient(#CBC7BC, #D2CBC3);
+        }
+
+        .capture_cancel {
+            /*background-color: green;*/
+            width: 50%;
+            align-self: flex-start;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            left: 0;
+
+
+
+        }
+
+        .arrow-icon {
+            /* background-color: lightcoral; */
+            background-color: transparent;
+            height: 52px;
+            width: 58px;
+            position: relative;
+            cursor: pointer;
+            border-radius: 4px;
+            transform-origin: center center;
+            transform: rotate(90deg);
+            clear: both;
+
+
+
+
+
+
+
+        }
+
+        .left-bar {
+            position: absolute;
+            background-color: transparent;
+            top: 22px;
+            left: 0;
+            width: 40px;
+            height: 8px;
+            display: block;
+            transform: rotate(60deg);
+            float: right;
+            border-radius: 4px;
+
+
+        }
+
+        .left-bar:after {
+            content: "";
+            background-color: #F7F2F6;
+            width: 40px;
+            height: 8px;
+            display: block;
+            float: right;
+            border-radius: 10px;
+            z-index: -1;
+            box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.7);
+
+        }
+
+        .right-bar {
+            position: absolute;
+            background-color: transparent;
+            top: 22px;
+            left: 16px;
+            width: 40px;
+            height: 8px;
+            display: block;
+            transform: rotate(-60deg);
+            float: right;
+            border-radius: 4px;
+
+
+        }
+
+        .right-bar:after {
+            content: "";
+            background-color: #F7F2F6;
+            width: 40px;
+            height: 8px;
+            display: block;
+            float: right;
+            border-radius: 10px;
+            z-index: -1;
+            box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
+
+        }
+
+        .three-bar {
+            position: absolute;
+            background-color: transparent;
+            top: 8px;
+            left: 8px;
+            width: 40px;
+            height: 8px;
+            display: block;
+
+            float: right;
+            border-radius: 4px;
+
+
+        }
+
+        .three-bar:after {
+            content: "";
+            background-color: #F7F2F6;
+            width: 40px;
+            height: 8px;
+            display: block;
+            float: right;
+            border-radius: 10px;
+            z-index: -1;
+            box-shadow: 2px -2px 2px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+
+<body>
+
+    <button (click)="handleVideo(true)" *ngIf="cameraStatus.open===false" id="openCapture">打开摄像头</button>
+    <div class="capture_box" style="position: relative;
+width: 640px;
+height: 480px;
+display: flex;
+justify-content: center;" *ngIf="cameraStatus.open===true">
+        <div class="capture_buttonsbox">
+            <div class="capture_cancel">
+                <a class="arrow-icon" (click)="handleVideo(false)" id="capture_cancelbtn">
+                    <span class="left-bar"></span>
+                    <span class="right-bar"></span>
+                    <span class="three-bar"></span>
+                </a>
+
+            </div>
+
+            <div class="capture_confirm1" (click)="handleCapture()" id="capture">
+                <div class="capture_confirm2"></div>
+            </div>
+        </div>
+
+
+        <video id="camera_video" style="width: 100%;
+  height: 100%;
+  border: 2px blue solid;
+  z-index: 1000;"></video>
+    </div>
+
+
+
+    <br />
+
+    <img src="" id="camera_show" alt="暂无照片" title="photo">
+
+    <script>
+        this.cameraStatus = {
+            open: false,
+            readly: false,
+            mediaStreamTrack: ""
+        }
+        const _this = this;
+
+        this.navigator_onit = () => {
+            // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+            let copy_mediaDevices = navigator.mediaDevices || {};
+            if (!navigator.mediaDevices) {
+                // navigator.mediaDevices = {};
+                copy_mediaDevices = {}
+            } else if (copy_mediaDevices.getUserMedia) {
+                // 一些浏览器部分支持 mediaDevices。我们不能直接给对象设置 getUserMedia 
+                // 因为这样可能会覆盖已有的属性。这里我们只会在没有getUserMedia属性的时候添加它。
+                navigator.mediaDevices.getUserMedia = function (constraints) {
+
+                    // 首先，如果有getUserMedia的话，就获得它
+                    let copy_navigator = navigator;
+                    let getUserMedia = copy_navigator.webkitGetUserMedia || copy_navigator.mozGetUserMedia || undefined;
+
+                    // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+                    if (!getUserMedia) {
+                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                    } else {
+                        // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+                        return new Promise(function (resolve, reject) {
+                            getUserMedia.call(navigator, constraints, resolve, reject);
+                        });
+
+                    }
+
+                }
+            }
+        }
+
+        this.handleVideo = (val) => {//打开/关闭摄像头
+            this.cameraStatus.open = val;
+
+            if (val == false) {
+                //关闭摄像头;、
+                this.cameraStatus.readly = false;
+                //   console.log(this.cameraStatus.mediaStreamTrack)
+                //   console.log(this.cameraStatus.mediaStreamTrack.getTracks())
+                this.cameraStatus.mediaStreamTrack.getTracks()[0] && this.cameraStatus.mediaStreamTrack.getTracks()[0].stop();
+                this.cameraStatus.mediaStreamTrack.getTracks()[1] && this.cameraStatus.mediaStreamTrack.getTracks()[1].stop();
+
+            } else if (val == true) {
+                //打开摄像头;
+
+                navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+                    .then(function (stream) {
+                        //类型查看
+                        //https://developer.mozilla.org/en-US/docs/Web/API/MediaStream
+
+                        let video = document.getElementById('camera_video');
+                        // 旧的浏览器可能没有srcObject
+                        if ("srcObject" in video) {
+                            video.srcObject = stream;
+                            _this.cameraStatus.mediaStreamTrack = stream;
+                        } else {
+                            // 防止在新的浏览器里使用它，应为它已经不再支持了
+                            video.src = window.URL.createObjectURL(stream);
+                            _this.cameraStatus.mediaStreamTrack = stream;
+                        }
+
+                        video.onloadedmetadata = function (e) {
+                            video.play();
+                            _this.cameraStatus.readly = true
+
+                        };
+                    })
+                    .catch(function (err) {
+                        console.log(err.name + ": " + err.message);
+                        _this.cameraStatus.readly = false
+                    });
+
+
+            }
+        }
+
+        this.handleCapture = () => {//拍照
+            if (this.cameraStatus.readly) {
+                let video = document.getElementById('camera_video');
+                let canvasDOM = document.createElement("canvas");
+                canvasDOM.width = video.videoWidth;
+                canvasDOM.height = video.videoHeight;
+                canvasDOM.getContext('2d').drawImage(video, 0, 0);
+                let data = canvasDOM.toDataURL('image/webp');
+                document.getElementById('camera_show').setAttribute('src', data);
+                //关闭摄像头
+                this.handleVideo(false)
+            } else {
+                alert("相机没有准备好!")
+            }
+        }
+
+        this.navigator_onit();//对navigator对象进行兼容性初始化处理
+        let openCapture = document.getElementById("openCapture");
+        let capture_cancelbtn = document.getElementById("capture_cancelbtn");
+        let capture = document.getElementById("capture");
+
+        openCapture.onclick = () => { this.handleVideo(true); }
+        capture_cancelbtn.onclick = () => { this.handleVideo(false); }
+        capture.onclick = () => { this.handleCapture(false); }
+
+
+
+    </script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.1/eruda.min.js"></script>
+    // 初始化
+    <script>eruda.init()</script>
+</body>
+
+</html>

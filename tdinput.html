@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .table1 {
+            width: 1000px;
+            margin: 60px auto;
+            border-collapse: collapse;
+        }
+
+        .itemtd {
+            width: 210px;
+            height: 62px;
+            border-collapse: collapse;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #insertdiv {
+            position: absolute;
+            z-index: 1;
+        }
+
+        #myInput {
+            position: absolute;
+        }
+
+        #inserttab1 {
+            position: absolute;
+            width: 240px;
+            height: 25px;
+            z-index: 4;
+            margin-top: 67px;
+            border-top-style: none;
+        }
+
+        #inserttab2 {
+            width: 240px;
+            overflow-y: scroll;
+            z-index: 2;
+            margin-top: 92px;
+        }
+
+        #inserta {
+            display: block;
+            text-align: center;
+            height: 25px;
+            width: 240px;
+            z-index: 3;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="blue" class="jzpzdiv"></div>
+    <script language="javascript">
+        init();
+        function init() {
+            jzpzTable(4, 6);
+            initjzpz();
+        }
+        function jzpzTable(rowsLength, colLength) {
+            var position = document.getElementById("blue");//定义table生成的位置                                      
+            var objTable = document.createElement("table");
+            objTable.className = 'table1';
+            objTable.id = 'table1';
+            objdiv = document.createElement("div");
+            objdiv.className = 'cjdiv';
+            for (var i = 0; i < rowsLength; i++) {
+                var objTr = document.createElement("tr");
+                objTr.className = "itemtr";
+                tdLength = 5
+                for (var j = 0; j < colLength - tdLength; j++) {
+                    var objTd = document.createElement("td");
+                    objTd.id = "add";
+                    objTd.className = 'itemtd';
+                    objTd.style.border = '1px solid black';
+                    objTd.innerHTML = "<div id='insertdiv' style='display: none;'>"
+                        + '<input autocomplete="off"  type="text" id="myInput" onkeyup="myFunction()" oninput="handleInput(event)" placeholder="搜索... " class="jzpzinput1">'
+                        + '<table id="inserttab1"  >'
+                        + '<tr class="tr1">'
+                        + '<td class="quanbu" style="width: 48px;">全部</td>'
+                        + '<td class="zichan" style="width: 48px;">资产</td>'
+                        + '<td class="fuzhai" style="width: 48px; ">负债</td>'
+                        + '<td class="quanyi" style="width: 48px;">权益</td>'
+                        + '<td class="chengben" style="width: 48px;">成本</td>'
+                        + '<td class="sunyi" style="width: 48px;">损益</td>' +
+                        '</tr>' + '</table>' + '<table id="inserttab2">'
+                        + '<tr class="tr1">'
+                        + '<td style="font-size: 14px; border: solid 0px;">1001库存现金</td>'
+                        + '</tr>'
+                        + '<tr class="tr1">'
+                        + '<td style="font-size: 14px; border: solid 0px;">100201农行</td>'
+                        + '</tr>'
+                        + '<tr class="tr1">'
+                        + '<td style="font-size: 14px; border: solid 0px;">1012其他货币资金</td>'
+                        + '</tr>'
+                        + '<tr class="tr1">'
+                        + '<td style="font-size: 14px; border: solid 0px;">1001</td>'
+                        + '</tr>'
+                        + '<tr class="tr1">'
+                        + '<td style="font-size: 14px; border: solid 0px;">1001</td>'
+                        + '</tr>' + '</table>' + '<a href="javascript:;" id="inserta">点击添加</a>' + "</div>";
+                    objTr.appendChild(objTd);
+                }
+                objdiv.appendChild(objTr);
+                objdiv1 = document.createElement("div");
+            }
+            objTable.appendChild(objdiv);
+            position.appendChild(objTable);
+            console.log(position);
+        }
+        function initjzpz() {
+            const table1 = document.querySelector('#table1')
+            getitemtds = table1.querySelectorAll('.itemtd')
+            function jzpzkm() {
+                for (let y = 0; y < getitemtds.length; y++) {
+                    getitemtd = getitemtds[y];
+                    getitemtd.addEventListener('click', function () {
+                        const insertdiv = this.children[0]
+                        insertinput = this.children[0].children[0]
+                        inserttab1 = this.children[0].children[1]
+                        inserttab2 = this.children[0].children[2]
+                        inserta = this.children[0].children[3]
+                        insertdiv.style.display = "block";
+                        insertinput.style.width = "204px";
+                        insertinput.style.height = "62px";
+                        inserttab1.style.border = "1px solid red"
+                        inserttab1.style.backgroundColor = "white"
+                        inserttab2.style.border = "1px solid red"
+                        inserttab2.style.backgroundColor = "white"
+                        inserttab2.style.maxHeight = "100px"
+                        inserttab2.style.display = "block"
+                        inserta.style.border = "1px solid red"
+                        inserta.style.backgroundColor = "white"
+                        function cell() {
+                            rows = inserttab2.querySelectorAll('tr');
+                            for (i = 0; i < rows.length; i++) {
+                                for (j = 0; j < rows[i].cells.length; j++) {
+                                    rows[i].cells[j].onclick = function (e) {
+                                        insertinput.value = this.innerHTML;
+                                        inserttab1.style.border = "white"
+                                        inserttab2.style.border = "white"
+                                        inserta.style.border = "white"
+                                        inserttab1.innerHTML = ''
+                                        inserttab2.innerHTML = ''
+                                        inserta.innerHTML = ''
+                                    }
+                                }
+                            }
+                        }
+                        cell()
+                    })
+                }
+            }
+            jzpzkm();
+        }
+        function myFunction() {
+            let table1 = document.getElementsByClassName('table1')[0]
+            getitemtdkms = table1.getElementsByClassName('itemtdkm')
+            for (var y = 0; y < getitemtdkms.length; y++) {
+                getitemtdkm = getitemtdkms[y];
+                oinput = getitemtdkm.children[0].children[0];
+                tab1 = getitemtdkm.children[2].children[0];
+                var oinput, filter, table, tr, td, i;
+                filter = oinput.value.toUpperCase();
+                tr = tab1.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            oinput.innerHTML = this.value;
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
+        function handleInput(event) {
+            let table1 = document.getElementsByClassName('table1')[0]
+            getitemtdkms = table1.getElementsByClassName('itemtdkm')
+            for (var y = 0; y < getitemtdkms.length; y++) {
+                getitemtdkm = getitemtdkms[y];
+                charudivbiaotitab = getitemtdkm.children[2].children[0];
+                const oinput = event.target;
+                if (oinput.value) {
+                    charudivbiaotitab.style.height = ""
+                    charudivbiaotitab.style.maxHeight = "100px"
+                } else {
+                    charudivbiaotitab.style.maxHeight = "100px"
+                    charudivbiaotitab.style.display = "block"
+                }
+            }
+        }                                                                                                                                                                                                                                                  
+    </script>
+</body>
+
+</html>

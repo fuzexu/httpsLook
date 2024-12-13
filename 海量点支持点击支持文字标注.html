@@ -1,0 +1,4647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标注图层-北京充电桩分布</title>
+    <style>
+        html,
+        body,
+        #map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .demo-title {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            z-index: 1;
+        }
+
+        .amap-info-window {
+            width: 150px;
+            background: #fff;
+            border-radius: 3px;
+            padding: 3px 7px;
+            box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
+            position: relative;
+            font-size: 12px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #ACB3BB;
+        }
+
+        h3 {
+            font-weight: normal;
+            margin-top: 5px;
+            color: #8E939D;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-title">
+        <h1>标注图层-北京充电桩分布</h1>
+        <h3>使用Loca数据源展示海量点标注</h3>
+    </div>
+    <div id="map"></div>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=dc935a20c737b72d28f7e61a2a195964"></script>
+    <script src="https://webapi.amap.com/loca?v=2.0.0&key=dc935a20c737b72d28f7e61a2a195964"></script>
+    <script>
+        let date = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "properties": {
+                        "id": "9fa421703bd9968a190eab308b49cad2",
+                        "lon": 116.567761,
+                        "lat": 35.415207,
+                        "name": "阳光花园",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.567761,
+                            35.415207
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "615a4b86-fb61-442e-adaa-cccc674e1a67",
+                        "lon": 116.585962,
+                        "lat": 35.425839,
+                        "name": "贝多里新媒体产业基地",
+                        "wkt": "MULTIPOLYGON(((116.585565 35.425988,116.585597 35.425655,116.586144 35.425673,116.586134 35.426049,116.585565 35.425988)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.585962,
+                            35.425839
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "e5027785-6b87-413b-980a-dcfe3d43eda1",
+                        "lon": 116.576883,
+                        "lat": 35.417856,
+                        "name": "山东济宁模具厂",
+                        "wkt": "MULTIPOLYGON(((116.576601 35.417968,116.57659 35.417705,116.577052 35.417705,116.577052 35.417994,116.576601 35.417968)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.576883,
+                            35.417856
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "060b9668-1f3b-4e30-a874-91a91224b5e7",
+                        "lon": 116.576942,
+                        "lat": 35.418086,
+                        "name": "济宁市智能制造产业园",
+                        "wkt": "MULTIPOLYGON(((116.576661 35.418288,116.576683 35.418008,116.577122 35.417982,116.577112 35.418279,116.576661 35.418288)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.576942,
+                            35.418086
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "53a64ad6-e83b-4d6a-ab1a-308d9245f7e1",
+                        "lon": 116.576963,
+                        "lat": 35.418084,
+                        "name": "泡宝电商园",
+                        "wkt": "MULTIPOLYGON(((116.57675 35.418192,116.576589 35.418201,116.576686 35.417913,116.577126 35.417956,116.577115 35.418271,116.57675 35.418192)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.576963,
+                            35.418084
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "8401b4e0-ca96-4a19-ac61-b8ca8759a673",
+                        "lon": 116.587925,
+                        "lat": 35.417883,
+                        "name": "山东银十支付产业园",
+                        "wkt": "MULTIPOLYGON(((116.587597 35.418007,116.587608 35.41771,116.588123 35.417693,116.588134 35.418042,116.587597 35.418007)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.587925,
+                            35.417883
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "4f0a5b22-bfd1-42a5-99ff-196940d258b1",
+                        "lon": 116.564539,
+                        "lat": 35.406364,
+                        "name": "济宁颐高海外高层次人才创业园",
+                        "wkt": "MULTIPOLYGON(((116.564336 35.406495,116.564304 35.406242,116.564679 35.406215,116.56469 35.406539,116.564336 35.406495)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.564539,
+                            35.406364
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "9a8b5d1b-c792-4650-bad1-980add1380cb",
+                        "lon": 116.581379,
+                        "lat": 35.41427,
+                        "name": "岁耕农场",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.581379,
+                            35.41427
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "ea7e49bd-4358-4b4b-a02a-14a220882776",
+                        "lon": 116.580219,
+                        "lat": 35.418512,
+                        "name": "关帝庙金融财富中心",
+                        "wkt": "MULTIPOLYGON(((116.58 35.418611,116.580043 35.418287,116.580558 35.418331,116.580515 35.418672,116.58 35.418611)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.580219,
+                            35.418512
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "719bef25-368a-4767-9afc-8634fd0486d2",
+                        "lon": 116.58584,
+                        "lat": 35.420902,
+                        "name": "泗水林丰机械厂",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.58584,
+                            35.420902
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "6df47190-b6d6-4c80-bc49-73feccbabc01",
+                        "lon": 116.56529,
+                        "lat": 35.409388,
+                        "name": "车智慧科技园",
+                        "wkt": "MULTIPOLYGON(((116.565054 35.409521,116.565054 35.409268,116.565408 35.409268,116.56544 35.40953,116.565054 35.409521)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.56529,
+                            35.409388
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "331a745d-bf12-45d4-b86e-6a39eaa138fa",
+                        "lon": 116.579774,
+                        "lat": 35.406396,
+                        "name": "附院颐和印刷厂",
+                        "wkt": "MULTIPOLYGON(((116.57963 35.406263,116.579635 35.406412,116.57991 35.406402,116.579905 35.406258,116.57963 35.406263)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.579774,
+                            35.406396
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "a54e10c8-02e9-4ad1-92d9-ea8e95ab1cad",
+                        "lon": 116.561389,
+                        "lat": 35.419693,
+                        "name": "山东铭安堂医药有限公司",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.561389,
+                            35.419693
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "eebc7738-9ec8-4a36-9422-1ca77df624df",
+                        "lon": 116.588383,
+                        "lat": 35.41694,
+                        "name": "教育产业园",
+                        "wkt": "MULTIPOLYGON(((116.588136 35.416734,116.588622 35.416734,116.588652 35.417128,116.588132 35.417153,116.588136 35.416734)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.588383,
+                            35.41694
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "8f59f6f2-2475-465a-aef0-d7fe5d65f4b7",
+                        "lon": 116.57655,
+                        "lat": 35.417348,
+                        "name": "泡宝产业园",
+                        "wkt": "MULTIPOLYGON(((116.57603 35.417906,116.576031 35.417917,116.576037 35.417925,116.576045 35.417931,116.576057 35.417933,116.577008 35.41793,116.577021 35.417928,116.577033 35.417923,116.577044 35.417917,116.57705 35.417906,116.577053 35.417894,116.577053 35.417287,116.577067 35.416796,116.577065 35.416781,116.577057 35.416768,116.577045 35.416762,116.577028 35.416758,116.577013 35.416758,116.576092 35.416768,116.576077 35.416772,116.576067 35.416782,116.576059 35.416798,116.576054 35.416827,116.57603 35.417906)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.57655,
+                            35.417348
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "d6234725-8d01-4bfb-9a00-97ef8c3312c4",
+                        "lon": 116.58026,
+                        "lat": 35.418856,
+                        "name": "关帝庙金融街",
+                        "wkt": "MULTIPOLYGON(((116.58104 35.419207,116.580821 35.419468,116.579501 35.419494,116.579496 35.41827,116.581043 35.418231,116.58104 35.419207)))",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.58026,
+                            35.418856
+                        ]
+                    },
+                    "type": "Feature"
+                },
+                {
+                    "properties": {
+                        "id": "7bd20efd-af03-462e-8a18-e1c4f7987170",
+                        "lon": 116.563118,
+                        "lat": 35.406528,
+                        "name": "济宁电化厂",
+                        "type": 2
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.563118,
+                            35.406528
+                        ]
+                    },
+                    "type": "Feature"
+                }
+            ]
+        }
+
+        let newdata = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "高陆通充电站(文津国际公寓)",
+                        "address": "中关村东路1号院5号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.32697,
+                            39.993193
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(威盛大厦西北)",
+                        "address": "中关村东路1号谷歌大厦门口"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.329133,
+                            39.993581
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站",
+                        "address": "中关村东路1号院科建大厦南门附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.329178,
+                            39.993521
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(创新大厦)",
+                        "address": "中关村东路1号院创新大厦B3层"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.33081,
+                            39.995731
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(清华科技园)",
+                        "address": "中关村东路1号院地下B2-B3停车场内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.331356,
+                            39.994787
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车充电站(开迈斯充电站北京市海淀区龙湖唐宁one直流站)",
+                        "address": "中关村东路18正东方向112米龙湖唐宁one前侧车位"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.333262,
+                            39.989614
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车充电站(新源恒远公共站079-黄庄小区)",
+                        "address": "中关村南三街15号黄庄小区内配电室旁地上停车位"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.318223,
+                            39.981678
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(海淀区北四环内环辅路40079充电扬招站)",
+                        "address": "北四环内环辅路南侧,海淀图书城口东20米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.306299,
+                            39.984816
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(五道口嘉园)",
+                        "address": "五道口镇展春园西路3号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.340343,
+                            39.989639
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "优盛智控充电站",
+                        "address": "科学院南路57号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.325273,
+                            39.979127
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京西郊宾馆)",
+                        "address": "王庄路18号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.343081,
+                            39.997868
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电汽车充电站(北京语言大学)",
+                        "address": "学院路15号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.343352,
+                            39.994378
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车充电站(开迈斯充电站北京市海淀区领展购物广场直流站)",
+                        "address": "丹棱街甲1号B3层"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.314001,
+                            39.978784
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "富电易充汽车充电站(海淀镇政府充电点)",
+                        "address": "西苑操场路108号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.295635,
+                            39.990438
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "万城万充汽车充电站(中关村展示中心)",
+                        "address": "新建宫门路2号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.295402,
+                            39.990045
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(中科院软件园)",
+                        "address": "中关村南四街4号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.337691,
+                            39.980431
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(不对外开放桔子酒店)",
+                        "address": "志新西路3-1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.344844,
+                            39.984279
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充汽车充电站(北京市海淀区西幼小区充电站)",
+                        "address": "海淀南路24号院西幼小区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.309111,
+                            39.974844
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(北京航空航天大学本校校医院西侧)",
+                        "address": "学院路37号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.343295,
+                            39.980558
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(科育社区32号楼)",
+                        "address": "中关村南一街科育社区32号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.31964,
+                            39.985104
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(科育社区46号楼)",
+                        "address": "中关村南一街科育社区46号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.318702,
+                            39.984509
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(科育社区95号楼)",
+                        "address": "中关村南路科育社区95号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.321283,
+                            39.982215
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(科育社区90号楼)",
+                        "address": "中关村南路科育社区90号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.32065,
+                            39.981645
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(科育社区88号楼)",
+                        "address": "中关村南路科育社区88号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.320823,
+                            39.98115
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(立方庭)",
+                        "address": "中关村善缘街1号立方·庭停车场B4-2段"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.308516,
+                            39.980362
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(银网中心B座)",
+                        "address": "知春路113号银网中心B座"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.320574,
+                            39.976631
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(中关村公馆)",
+                        "address": "海淀中街16号中关村公馆"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.312052,
+                            39.977489
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "挚达科技汽车充电站(清华路)",
+                        "address": "清华路与近春路交叉口西南约140米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.317678,
+                            39.999093
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京北大博雅国际酒店(简单冲)",
+                        "address": "成府街与大成坊路交叉口东北120米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.313477,
+                            39.997167
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "充电侠汽车充电站(北京大学光华管理学院2号楼北侧)",
+                        "address": "中关村北大街西200米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.313137,
+                            39.996208
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京文津地下(简单冲)",
+                        "address": "成府路与中关村北二街交叉口北约80米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.327514,
+                            39.993288
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿联汽车充电站(中关村北大街)",
+                        "address": "清华西路与清华路交叉口北150米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.316007,
+                            40.001373
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站",
+                        "address": "创业大厦北侧停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.329427,
+                            39.995585
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "中国科学院文献情报中心大楼电动汽车充电站",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.323431,
+                            39.987183
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(北京大学王克桢楼直流快充)",
+                        "address": "中关村北大街与海淀路交叉口北80米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.315881,
+                            39.987235
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(北京大学王克桢楼直流快充)",
+                        "address": "海淀路52号北京大学王克桢楼东侧地上停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.315438,
+                            39.987219
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京华业大厦(简单冲)",
+                        "address": "日新路与光华路交叉口西南80米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.333586,
+                            39.997187
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "简单充汽车充电站华业大厦站",
+                        "address": "华业大厦院内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.333593,
+                            39.997154
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京学研大厦(简单冲)",
+                        "address": "双清路与荷清路交叉口西约80米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336203,
+                            39.998993
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "简单充充电站(华业大厦站)",
+                        "address": "双清路清华大学东门旁边华业大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336268,
+                            39.998946
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "腾势充电站(鼎好大厦A座B4站)",
+                        "address": "海淀大街3号鼎好电子城A座地下停车场B4"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.313977,
+                            39.98458
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(海淀北一街)",
+                        "address": "海淀大街3号鼎好商城地下停车场B4车位H171,H170,H188,H189"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.314022,
+                            39.984261
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "鼎好电子城B4停车场充电站",
+                        "address": "甲1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.314022,
+                            39.984261
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "宝马充电站(宝马站方正国际大厦)",
+                        "address": "北四环西路52号(地面)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.313111,
+                            39.984557
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源充电站(方正国际大厦)",
+                        "address": "北四环西路52号B2停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.312941,
+                            39.984436
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "海淀区中科院物理所南院充电桩",
+                        "address": "中关村南三街8号物理所所内停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.329119,
+                            39.983855
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "比亚迪汽车充电站(北京物科宾馆北)",
+                        "address": "中关村南三街8号院附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.330592,
+                            39.984524
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "小鹏汽车充电站(理想国际站)",
+                        "address": "北四环西路58号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.310511,
+                            39.98451
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "蔚来换电站(理想国际大厦)",
+                        "address": "海淀中街与海淀北一街交叉口西北约60米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.310433,
+                            39.98446
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "NIO power理想国际换电站",
+                        "address": "北四环西路58号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.310442,
+                            39.984391
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "蔚来目的地充电站(北京中关村蔚来中心UC)",
+                        "address": "海淀街道海淀中街理想国际大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.310121,
+                            39.984489
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源汽车充电站(普天大厦)",
+                        "address": "北二街6号中国普天大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.311076,
+                            39.983546
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天充电站(中科院计算技术研究所)",
+                        "address": "中关村南三街中科院计算机技术研究所"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.326148,
+                            39.982129
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源充电站(科育社区86号楼)",
+                        "address": "中关村南路"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.3206,
+                            39.981268
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "宝马充电站(中科院计算机技术研究所)",
+                        "address": "北四环保福寺桥中科院计算机技术研究所"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.327052,
+                            39.982085
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京世纪科贸大厦(简单冲)",
+                        "address": "中关村东路与北四环西路辅路交叉口南100米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.333707,
+                            39.985013
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "中科院物理所主楼充电站",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.331604,
+                            39.98366
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "隆瑞三优五道口微循环充电站",
+                        "address": "中关村五道口"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.337382,
+                            39.987996
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "小易汽车充电站",
+                        "address": "中国技术交易大厦A座B2"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.307764,
+                            39.983762
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "电动汽车充电站",
+                        "address": "清华大学蒙民伟科技大楼东侧"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336321,
+                            40.00641
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京中关村西区地下(简单冲)",
+                        "address": "海淀大街与海淀中街交叉口西约60米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.310278,
+                            39.982149
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "简单充充电站(创业公社停车场站)",
+                        "address": "海淀大街24号创业公社停车场B3"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.309751,
+                            39.982146
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京辽宁大厦(简单冲)",
+                        "address": "北四环中路与北四环西路交叉口东南约100米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.33777,
+                            39.985655
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车之家",
+                        "address": "中国电子大厦丹棱街"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.312014,
+                            39.980065
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "小鹏超级充电站(中国电子大厦站)",
+                        "address": "中国电子大厦地下停车场b3"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.311926,
+                            39.979534
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "简单充充电站(辽宁大厦站)",
+                        "address": "辽宁大厦足球场庞停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.338375,
+                            39.984439
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(骏马国际酒店南)",
+                        "address": "中关村东路95号附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.333054,
+                            39.979665
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源汽车充电站(东王庄社区卫生服务站西南)",
+                        "address": "清华东路中国矿业大学"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.345505,
+                            39.998708
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源充电站(银网中心B座)",
+                        "address": "知春路113号银网中心B座"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.320456,
+                            39.976668
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "宝马充电站(宝马站长安金长风店)",
+                        "address": "五道口新村4号长安4S店"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.340382,
+                            39.983696
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(特来电站中关村人才苑)",
+                        "address": "北四环西路4号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.329543,
+                            39.977461
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "庞大集团汽车充电站(知春路)",
+                        "address": "知春路辅路与中关村大街交叉口东约60米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.318259,
+                            39.976303
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北汽新能源汽车充电站(知春路)",
+                        "address": "海淀南路84附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.318289,
+                            39.976281
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "富电科技小易充电站(海淀镇政府站)",
+                        "address": "柳西苑操场108号(海淀镇政府内)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.295259,
+                            39.990447
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "万城万充充电站(中汇世银大厦)",
+                        "address": "中关村展示中心"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.294455,
+                            39.98999
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天充电站(北京城市学院总校区)",
+                        "address": "北四环中路269号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.346119,
+                            39.987589
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "心邻居智慧交通共享充电柜",
+                        "address": "海淀南路9号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.308668,
+                            39.976352
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "宝马充电站(宝马站普天大厦)",
+                        "address": "海淀北二街6号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.304615,
+                            39.977377
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特斯拉超级充电站(龙湖星悦荟)",
+                        "address": "颐和园路208号龙湖星悦荟地下停车场B1层08-19车位"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.291287,
+                            39.996902
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(中国人民大学图书馆站)",
+                        "address": "(新图书馆地下车库)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.316661,
+                            39.972963
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(八家嘉园移动储能设备)",
+                        "address": "后八家路62号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.343407,
+                            40.015432
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "循道新能源汽车充电站(中关村东路)",
+                        "address": "中关村东路172附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.334603,
+                            39.972179
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "中国人民大学宜园二期汽车充电站",
+                        "address": "中关村大街59号中国人民大学内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.309742,
+                            39.971196
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(中国人民大学明德楼)",
+                        "address": "谨勤路与汇贤路交叉口西20米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.309056,
+                            39.971026
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京京仪大厦)",
+                        "address": "大钟寺东路9号-a座-1-4楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.337794,
+                            39.972669
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(海淀区苏州街40024充电扬招站)",
+                        "address": "苏州街44号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.307127,
+                            39.97101
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电新能源汽车充电站(不对外北京海淀区航空航天大学本校IRC大楼南侧)",
+                        "address": "学院路37号东门"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.349594,
+                            39.979778
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(石油大院生活区)",
+                        "address": "学院路20号石油勘探学院院内科技餐厅北侧停车场、3号点科技餐厅北侧停车场内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.356644,
+                            39.995685
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(友谊路)",
+                        "address": "中关村大街59号校园西门明德楼地下车库B区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.316527,
+                            39.968375
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(京仪科技大厦B座南)",
+                        "address": "大钟寺东路9号京仪宾馆B3停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.338261,
+                            39.971246
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "万马爱充电站(北京市颐和园管理处小车班)",
+                        "address": "青龙桥街道二龙闸路颐和园管理处"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.282851,
+                            39.996627
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天充电站(颐和安缦酒店)",
+                        "address": "颐和园宫门前街1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.282673,
+                            39.999135
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(格林豪泰学清路店)",
+                        "address": "学清路逸成东苑9号楼旁"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.349644,
+                            40.01507
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "庞大集团汽车充电站",
+                        "address": "石板房南路南200米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.356484,
+                            40.006572
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(北京中国农业大学东校区充电站)",
+                        "address": "中国农业大学东校区信息与电气工程学院地下停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.356732,
+                            40.006144
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(数码大厦)",
+                        "address": "中关村南大街2号A座附近数码大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.322763,
+                            39.966232
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京市海淀区石油大院生活区公共)",
+                        "address": "学院路20号石油大院内东侧"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.35955,
+                            39.996731
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "金五星科技园充电站",
+                        "address": "中关村东路118号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336337,
+                            39.96868
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特斯拉目的地充电站(苏宁电器联想桥店站)",
+                        "address": "中关村东路118-5号金五星市场内苏宁电器(联想桥店)露天停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.335453,
+                            39.968332
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "隆瑞三优新建宫门374路充电站",
+                        "address": "昆明湖东路新建宫门路21号院西南侧约50米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.281854,
+                            39.991539
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(北京中国农业大学北区地库站)",
+                        "address": "石板房南路农大小区-北区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.356566,
+                            40.00835
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "充啊充汽车充电站",
+                        "address": "大有庄街大有双语幼儿园南侧约50米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.281942,
+                            40.002211
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京金五星科技园(简单冲)",
+                        "address": "北三环西路辅路与皂君庙路交叉口西约60米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.333534,
+                            39.967022
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(万泉商务花园)",
+                        "address": "万柳东路25号万泉商务花园地面停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.301184,
+                            39.968979
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特瓦特汽车充电站(学院国际)",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.352913,
+                            39.977521
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(学清嘉创大厦)",
+                        "address": "学清路与银泉路交叉口东南角学清嘉创大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.352673,
+                            40.014893
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北汽新能源汽车充电站(太阳园社区医疗卫生站东南)",
+                        "address": "北三环蓝景丽家大钟寺家居广场内西侧路"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.342323,
+                            39.969408
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "简单充中电信息大厦汽车充电站",
+                        "address": "中关村南大街6号中电信息大厦B2"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.323495,
+                            39.964607
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(特来电站北京大钟寺蓝景丽家)",
+                        "address": "北三环西路23号蓝景丽家大钟寺家居广场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.34235,
+                            39.96928
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "卡丘汽车充电站",
+                        "address": "硅谷亮城b2"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.309838,
+                            40.026612
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京中电信息大厦(简单冲)",
+                        "address": "篱笆房路与中关村南大街交叉口东80米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.323254,
+                            39.964425
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(万泉庄路)",
+                        "address": "万柳东路与万泉庄路交叉口西南100米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.300973,
+                            39.967844
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(北京园林绿化局站)",
+                        "address": "万泉庄路28号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.300963,
+                            39.96756
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(万柳新贵)",
+                        "address": "万泉庄路28号万柳·新贵A座"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.301311,
+                            39.967343
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "卡丘汽车充电站(泰富酒店)",
+                        "address": "西土城路1号院1号楼地库B2"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.35245,
+                            39.974655
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(首都体院社区西南)",
+                        "address": "北三环西路11号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.34725,
+                            39.970606
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(扬招站海淀区大钟寺家居广场优易充小站)",
+                        "address": "北三环西路23-1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.343064,
+                            39.968082
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "快来充汽车充电站(首都体育学院本部校区)",
+                        "address": "北三环西路11号首都体育学院内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.347203,
+                            39.970133
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(顺事嘉业创业园)",
+                        "address": "朱房路66号顺事嘉业创业园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.334852,
+                            40.027362
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(不对外开放保利海德公园)",
+                        "address": "北太平庄街道蓟门里北路蓟门壹号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.352261,
+                            39.973373
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京市海淀区友谊宾馆充电站)",
+                        "address": "友谊宾馆地下二层停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.31781,
+                            39.962757
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(圆明园花园别墅小区移动储能设备)",
+                        "address": "西祥路乙46号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.290799,
+                            40.020896
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源汽车充电站(学清路)",
+                        "address": "学清路9-3号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.351503,
+                            40.020059
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(北京友谊宾馆站)",
+                        "address": "中关村南大街1号友谊宾馆嘉宾楼左侧"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.320147,
+                            39.962091
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "牛快充汽车充电站",
+                        "address": "上河沿路与大有庄北里交叉口东约160米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.280878,
+                            40.012042
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "富电易充汽车充电站(海淀区志新路)",
+                        "address": "志新西路15号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.365516,
+                            39.996975
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "联合电动充电站(宏达商务中心)",
+                        "address": "上地西路宏达大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.310585,
+                            40.02977
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "小桔充电站(博雅西园)(暂停营业)",
+                        "address": "农大南路43号博雅西园小区3号楼地下一层停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.295898,
+                            40.025009
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "腾势充电站(海淀区塔院小区)",
+                        "address": "花园路3号塔院小区外公共停车场方智桩"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.360344,
+                            39.979632
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(塔院小区)",
+                        "address": "塔院东街附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.360387,
+                            39.979671
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(海淀区皂君庙路东侧40016充电扬招站)",
+                        "address": "皂君庙路道路东侧,交大附中西门南侧"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.335165,
+                            39.962405
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(海淀区皂君庙路东侧40017充电扬招站)",
+                        "address": "皂君庙路道路东侧,交大附中前"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.334959,
+                            39.962237
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(万柳中路)",
+                        "address": "万柳中路蜂鸟家园1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.297488,
+                            39.964994
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特斯拉汽车充电站(北京五彩城购物中心)",
+                        "address": "毛纺路附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336767,
+                            40.029778
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天充电站(北京电影学院)",
+                        "address": "羊坊店街道健安西路新华社皇亭子社区西南方向"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.355987,
+                            39.972332
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(新起点嘉园)",
+                        "address": "西三环苏州桥西北角长春桥路5号新起点嘉园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.303253,
+                            39.962422
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特斯拉超级充电站(清河万象汇店)",
+                        "address": "清河中街68号万象汇东区B2层"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336083,
+                            40.030262
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "雷克萨斯电动车服务站",
+                        "address": "花虎沟20号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.361575,
+                            40.015223
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京市海淀区中国农业科学院)",
+                        "address": "北下关街道中国农科院社区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.326068,
+                            39.959458
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "隆瑞三优(白庙510路充电站)",
+                        "address": "科芸路学士居小区旁"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.366215,
+                            40.009795
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京市海淀区中国农业科学院)",
+                        "address": "农科西大道寰太大厦东南侧约130米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.325486,
+                            39.958528
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云杉智慧汽车充电站-锋尚国际充电站",
+                        "address": "万柳中路29号院锋尚国际公寓B2层停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.29985,
+                            39.961662
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电新能源汽车充电站(北京中国政法大学海淀校区)",
+                        "address": "西土城路25号中国政法大学研究生院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.351052,
+                            39.966146
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(理工科技大厦西)",
+                        "address": "中关村南大街5号北京理工大学"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.319767,
+                            39.95768
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京畅清园小区)",
+                        "address": "花虎沟8号院-1号楼-1层-2号楼-d"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.364023,
+                            40.015313
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "凯源新能汽车充电站",
+                        "address": "宗泉南路29号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.297895,
+                            39.961613
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特瓦特汽车充电站(特瓦特北沙滩超级)",
+                        "address": "北沙滩1号北四环红星美凯龙地面停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.370282,
+                            40.002706
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "挚达科技汽车充电站",
+                        "address": "学院南路与魏公村路交叉口西150米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.321521,
+                            39.95732
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(大屯路)",
+                        "address": "北沙滩大屯路甲1号亚奥国际酒店地面停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.371084,
+                            40.00128
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充汽车充电站(肖家河北大住宅三区)",
+                        "address": "马连洼街道天秀南二路肖家河北大住宅三区,B1-106"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.280316,
+                            40.020072
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(翠微商场西门外停车场)",
+                        "address": "167号院-51号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.365766,
+                            39.977164
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电充电站(北京博瑞祥驰-奔驰星驿站扫码待开放)",
+                        "address": "德胜门外双泉堡花虎沟2号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.366977,
+                            40.013161
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云杉智慧汽车充电站(北京中国社科院皂君庙)",
+                        "address": "沙滩北街15号社科院法学所"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.335871,
+                            39.958339
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(翠微商场)(暂停营业)",
+                        "address": "花园路2号翠微商场西门入口左侧"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.365901,
+                            39.977204
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "富电易充汽车充电站(万柳公寓三区外围光伏)",
+                        "address": "万柳中路29号院1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.296817,
+                            39.960878
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "循道新能源汽车充电站",
+                        "address": "万柳西路与泉宗路交叉口南150米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.294097,
+                            39.961778
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天充电站(海淀区政府)",
+                        "address": "长春桥路17号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.298825,
+                            39.959434
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(农大家属院)",
+                        "address": "圆明园西路三号院16号楼西侧"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.279627,
+                            40.021538
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(中关村数字产业园)",
+                        "address": "花园东路2-B33号附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.36815,
+                            39.978278
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(因疫情运营车辆无法进入魏公村佳苑)",
+                        "address": "魏公村斜街7号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.319618,
+                            39.955462
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.29126,
+                            40.02992
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(海淀区京果商厦公共)",
+                        "address": "四道口路2号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.345526,
+                            39.960161
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "绿狗汽车充电站",
+                        "address": "上地三街与上地东路交叉口西南50米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.314518,
+                            40.037027
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充汽车充电站(1号楼停车场充电站)",
+                        "address": "蓝靛厂路与蓝靛厂中路交叉口西北约160米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.2818,
+                            39.967427
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电站(清景园)",
+                        "address": "永泰庄西路"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.349985,
+                            40.030608
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(庚坊国际移动储能设备)",
+                        "address": "花园路甲13号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.364604,
+                            39.97226
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充汽车充电站(中关村资本大厦充电站)",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.33821,
+                            39.956941
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(中关村资本大厦)",
+                        "address": "北下关街道学院南路161号中关村资本大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.338352,
+                            39.956953
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特斯拉超级充电站(北京中关村资本大厦)",
+                        "address": "学院南路62号地上停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.338423,
+                            39.95697
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电新能源汽车充电站(北京中国农业大学西校区)",
+                        "address": "圆明园西路2号中国农业大学西区资源与环境学院正门口"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.282721,
+                            40.025943
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(清景园移动储能设备)",
+                        "address": "永泰庄西路"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.350699,
+                            40.03074
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "珠海驿联汽车充电站(北京中国农业大学西校区)",
+                        "address": "圆明园西路2号中国农业大学中法牛肉基地(直接)充电点"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.282738,
+                            40.026019
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京京果商厦(简单冲)",
+                        "address": "四道口路与学院南路交叉口北约120米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.346178,
+                            39.959257
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充充电站",
+                        "address": "名苑雅居东门"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.372526,
+                            40.009129
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "优易充充电桩",
+                        "address": "北沙滩北一路名苑雅居"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.372459,
+                            40.009542
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(燕语清园西南2门)",
+                        "address": "毛纺路26号燕清源商务楼201(近燕清源体育公园)附近燕语清园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.340118,
+                            40.03529
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "电动汽车充电区",
+                        "address": "西土城路西土城路31号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.352839,
+                            39.962083
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云杉智慧汽车充电站-天和人家充电站",
+                        "address": "大屯路南沙滩2号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.375716,
+                            39.998549
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(观山园移动储能设备)",
+                        "address": "蓝靛厂路蓝靛厂观山园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.281606,
+                            39.966034
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(中和家园)",
+                        "address": "北沙滩大屯路甲1号中和家园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.37551,
+                            40.000707
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "智充充电站(清河泰鑫源)",
+                        "address": "永泰庄路与G6辅路交叉口东北120米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.347672,
+                            40.03297
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(康福瑞假日酒店地上停车场)",
+                        "address": "学院南路33号附近康福瑞假日酒店地上停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.346949,
+                            39.95873
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(翠叠园移动储能设备)",
+                        "address": "蓝靛厂翠叠园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.285235,
+                            39.963069
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(赶趟上地)",
+                        "address": "上地京新桥下"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.31493,
+                            40.038941
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充汽车充电站(中工投建设有限公司充电站)",
+                        "address": "上地四街华成大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.312028,
+                            40.038764
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国网分布式充电站(亚朵酒店上地店充电站)",
+                        "address": "上地街道上地东路27号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.313047,
+                            40.038996
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云杉智慧汽车充电站-世纪金源充电站",
+                        "address": "蓝靛厂金源时代购物中心B区写字楼停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.289734,
+                            39.959703
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(清润家园小区移动储能设备)",
+                        "address": "清润家园小区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.354211,
+                            40.030921
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车充电站(世纪金源)",
+                        "address": "西顶路与远大东路交叉口东约120米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.289547,
+                            39.9597
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网充电站(华商三优站北京花园饭店)",
+                        "address": "花园东路30号(10号线牡丹园地铁站旁)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.371708,
+                            39.976963
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "聚电充电站(北京花园饭店)",
+                        "address": "花园东路30号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.371781,
+                            39.976943
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京电动汽车充电站(昌平路)",
+                        "address": "g6京藏高速与g6京藏高速出口交叉口东50米北京创业大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.377388,
+                            39.992376
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "优易充charge汽车充电站(公共站朝阳区健翔桥北创业大厦优易充小站)",
+                        "address": "北京创业大厦西门"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.377459,
+                            39.992576
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(永泰新地标)",
+                        "address": "永泰庄北路永泰新地标"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.348681,
+                            40.034309
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(垂虹园移动储能设备)",
+                        "address": "蓝靛厂中路"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.286002,
+                            39.960978
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特斯拉汽车充电站",
+                        "address": "上地东路25附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.31247,
+                            40.03958
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网充电站(铁科嘉苑饭店)",
+                        "address": "大柳树路6号铁科嘉苑饭店停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336614,
+                            39.953838
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(私摩空间)",
+                        "address": "法华寺27号私摩大厦停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.311418,
+                            39.952529
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(公共站海淀区邮电大学瑞智充小站)",
+                        "address": "学院南路"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.351254,
+                            39.958711
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天充电站(曙光办公中心)",
+                        "address": "蓝靓厂1号车库B1层"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.278957,
+                            39.965243
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(永泰园中区)",
+                        "address": "西三旗街道永泰庄西路34号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.348337,
+                            40.035145
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电站(北坞村路)",
+                        "address": "四季青桥西南角北坞村路与昆明湖南路交叉口"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.273729,
+                            39.969364
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(交通大学家属楼-B3停车场北区)",
+                        "address": "大柳树路交通大学家属楼-B3停车场北区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.343222,
+                            39.954762
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(暂不对外开放科学园南里)",
+                        "address": "科学园南里人才公寓"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.379023,
+                            39.997815
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "快来充汽车充电站(小米运营演示)",
+                        "address": "清上园东路小米六期海淀区清上园东路小米六期"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.332609,
+                            40.039929
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(春荫园移动储能设备)",
+                        "address": "蓝靛厂春荫园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.281398,
+                            39.962713
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(不对外开放北京师范大学生物园停车场)",
+                        "address": "北京师范大学生物园停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.362417,
+                            39.964415
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京壳牌中央新闻纪录电影制片厂充电站",
+                        "address": "中央新闻纪录电影制片厂(集团)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.368021,
+                            39.969373
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "小桔充电站(北京壳牌中央新闻纪录电影制片厂)",
+                        "address": "北三环中路辅路与福东巷交叉口东北220米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.368021,
+                            39.969373
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(交通大学家属楼-B2停车场南区)",
+                        "address": "大柳树路交通大学家属楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.342852,
+                            39.954251
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "简单充汽车充电站(民族大学站)",
+                        "address": "紫竹院街道中关村南大街27号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.318392,
+                            39.950864
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源汽车充电站(有研新小区)",
+                        "address": "花园路街道北三环中路43号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.370878,
+                            39.972077
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "腾势充电站(通厦公元99)",
+                        "address": "西三旗街道G6辅路通厦·公元99"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.330183,
+                            40.040992
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京汽车汽车充电站(北京清河医院北)",
+                        "address": "G6辅路附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.345519,
+                            40.037429
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电新能源汽车充电站(不对外北京信息科技大学-小营校区)",
+                        "address": "清河小营东路12号北门"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.345611,
+                            40.037443
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北汽新能源汽车充电站(永泰庄北路)",
+                        "address": "永泰庄北路与前屯路交叉口西北160米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.348431,
+                            40.036412
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(不对外开放昆明湖南路1号院)",
+                        "address": "昆明湖南路1号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.272369,
+                            39.969138
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站",
+                        "address": "金河路与颐和园西门路交叉路口往南约210米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.262857,
+                            39.984271
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京市海淀区颐和园西门)",
+                        "address": "颐和园西门停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.262856,
+                            39.984272
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(扬招站海淀区远大路优易充小站)",
+                        "address": "远大路鲁园上河村"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.288825,
+                            39.957214
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "优易充charge充电站(海淀区远大路)",
+                        "address": "远大路鲁园上河村"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.288753,
+                            39.957234
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源充电站(普天新能源上地五街东口停车场)",
+                        "address": "上地五街9号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.307558,
+                            40.040864
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "宝马充电站(宝马站上地五街东口停车场)",
+                        "address": "上地五街东口停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.312089,
+                            40.041626
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源汽车充电站(上地五街东口停车场)",
+                        "address": "上地东路68号附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.312297,
+                            40.041708
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "卡丘汽车充电站(环星科创园)",
+                        "address": "花园路街道小关街82"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.376835,
+                            39.978933
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "卡丘充电充电站(环星科创园站)",
+                        "address": "花园路街道环星大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.37685,
+                            39.978846
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "珠海驿联汽车充电站(北京中国青年政治学院)",
+                        "address": "西三环北路25号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.307755,
+                            39.950588
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电汽车充电站(北京中国青年政治学院)",
+                        "address": "西三环北路25号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.307693,
+                            39.950561
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(公共站海淀区鹏晟伟业清河优易充小站)",
+                        "address": "八达岭高速清河小营桥北马路西300米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.338252,
+                            40.040603
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京信息科技大学健翔桥校区汽车充电站",
+                        "address": "健翔桥与北四环中路交叉口东北200米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.380741,
+                            39.988776
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "小鹏超级充电站(西奥中心)",
+                        "address": "风林绿洲I甲、乙号楼西奥中心B1停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.381183,
+                            40.00096
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "优易充汽车充电站",
+                        "address": "新街口外大街19号北京师范大学内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.365571,
+                            39.964568
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "开迈斯汽车充电站",
+                        "address": "西奥中心B1层停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.381406,
+                            40.001081
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京亿城国际中心)",
+                        "address": "马连洼北路亿城国际中心地下2层停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.283049,
+                            40.03316
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "小鹏北京西奥中心汽车充电站",
+                        "address": "林萃东路与科学园南里中街交叉口东南150米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.381672,
+                            40.001284
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "智充充电站(卡丘新能源站远望楼宾馆)",
+                        "address": "花园路街道北三环中路57号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.375549,
+                            39.974694
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(时雨园移动储能设备)",
+                        "address": "蓝靛厂时雨园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.280652,
+                            39.959879
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "尚科办公中心160kw快充充电站",
+                        "address": "东北旺西路尚科办公社区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.288497,
+                            40.036664
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "宝马充电站(宝马站有研新小区)",
+                        "address": "马甸西路月季园小区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.373978,
+                            39.971861
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(公共站海淀区城建大厦优易充小站)",
+                        "address": "魔女"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.369575,
+                            39.966889
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电汽车充电站(北京信息科技大学-健翔桥校区)",
+                        "address": "苇子坑35号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.382318,
+                            39.99045
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "腾势电动车充电站",
+                        "address": "清河安宁庄东路15号(祥龙博瑞九分公司汽车园区)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.330717,
+                            40.043241
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(公共站海淀区城建大厦优易充小站)",
+                        "address": "北太平庄路18号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.371802,
+                            39.96859
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(民族园西路)",
+                        "address": "民族园西路附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.380867,
+                            39.98291
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电充电站(北京京水建设集团)",
+                        "address": "黑山扈羊场1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.270437,
+                            40.02498
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "万马爱充充电站(丰台区广安路望园路-内部专用)",
+                        "address": "御园东60米(厢红旗路东)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.2577,
+                            39.998376
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(扬招站海淀区北京邮电大学优易充小站)",
+                        "address": "学院南路1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.360154,
+                            39.958244
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网中国电力科学研究院电动汽车充电站",
+                        "address": "小营东路15号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.346367,
+                            40.040364
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电汽车充电站(远大路22号院东区移动储能设备)",
+                        "address": "远大路22号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.285293,
+                            39.955546
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京光华创业园(简单冲)",
+                        "address": "安宁庄中街与安宁庄东路交叉口东220米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.333073,
+                            40.043801
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京交通大学)",
+                        "address": "海淀西直门外上园村3号北京交通大学"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.344862,
+                            39.951047
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充汽车充电站(交大家属区52区)",
+                        "address": "芳华路与天佑大道交叉口北60米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.34467,
+                            39.950966
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车充电站(交大运输设备管)",
+                        "address": "西直门外上园村3号-北京交通大学"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.344773,
+                            39.95099
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "上汽安悦充电汽车充电站(神州商务楼北)",
+                        "address": "京藏高速"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.337132,
+                            40.043132
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(7天农大南路店)",
+                        "address": "扈羊场1号裕隆新村1号楼(近天秀路)天水金楼养生馆"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.268461,
+                            40.024607
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "循道新能源汽车充电站",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.383795,
+                            40.004036
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "中国科学院微生物研究院华商三优充电站",
+                        "address": "北辰西路1号附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.383795,
+                            40.004036
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "安悦充电充电站(安悦站北京万通恒泰荣威4S店)",
+                        "address": "京藏高速北京隆晟通达汽车销售服务有限公司"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.33627,
+                            40.043675
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京华润华亭嘉园)",
+                        "address": "北四环中路6号华亭嘉园停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.383611,
+                            39.986906
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "智充汽车充电站(智充紫竹院路62号院)",
+                        "address": "紫竹院街道紫竹院路62号紫竹院路62号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.319446,
+                            39.946758
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天充电站(御园汇)",
+                        "address": "红旗路御园商务会馆"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.256245,
+                            39.999976
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电汽车充电站(北京市东北旺百旺绿荫停车场)",
+                        "address": "东北旺中路百旺绿荫停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.293898,
+                            40.041166
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车充电站(蔚来超充站北京上地百旺绿荫)",
+                        "address": "百旺绿荫停车场服务区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.293836,
+                            40.041311
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云杉智慧汽车充电站-兵器集团充电站",
+                        "address": "车道沟10号西院北小楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.298416,
+                            39.949362
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "电易达充电站(马甸经典家园)",
+                        "address": "亚运村街道小关街8号马甸经典家园"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.382052,
+                            39.980165
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京大诚中医针灸医院北)",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.276973,
+                            39.959187
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(常青园北里二期)",
+                        "address": "昆明湖南路11号常青园北里(东南1门)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.272862,
+                            39.962275
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(常青园北里一期)",
+                        "address": "昆明湖南路11号常青园北里常青园北里停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.272745,
+                            39.962198
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(百草园社区)",
+                        "address": "马连洼北路151号百草园社区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.279524,
+                            40.034807
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "依威能源汽车充电站(祁家豁子甲2号)",
+                        "address": "祁家豁子甲2号(近清香阁)麦当劳(健德桥店)"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.380669,
+                            39.976287
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "汽车充电站(新源恒远公共站020-闽江商务楼)",
+                        "address": "交大东路46号院停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.349077,
+                            39.950662
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿联新能源汽车充电站(北京师范大学海淀校区)",
+                        "address": "新街口外大街19号师范大学校区内图书馆北侧停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.368117,
+                            39.96126
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京倪氏海泰大酒店(简单冲)",
+                        "address": "厂西门中街与厂西门南路交叉口西约140米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.277174,
+                            39.958007
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站",
+                        "address": "中国科学院天地科学园区-B座停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.385661,
+                            40.004327
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "泰坦汽车充电站(福美苑小区10号院东北)",
+                        "address": "清河四拨子北京信息科技大学清河校区附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.342092,
+                            40.043894
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电汽车充电站(北京信息科技大学-清河校区)(内部专用)",
+                        "address": "北京信息科技大学-清河校区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.342092,
+                            40.043894
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "腾势充电站(龙德缘马坊)",
+                        "address": "黑泉路北京奥林匹克公园西北侧约200米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.371566,
+                            40.028248
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "简单充倪氏海泰大酒店汽车充电站",
+                        "address": "远大路29号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.276912,
+                            39.957981
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(北京市海淀区中国气象局社区南区)",
+                        "address": "中关村南大街中国气象局社区南区19号楼北侧停车场内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.32684,
+                            39.945556
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "中国科学院北京基因组研究院充电站",
+                        "address": "大屯路甲20号北中国科学院奥运村科技园内"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.38593,
+                            40.005501
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "云快充汽车充电站(北京电力自动化设备有限公司)",
+                        "address": "交大东路31号院"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.344649,
+                            39.948474
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京中科院遥感所)",
+                        "address": "大屯路甲20号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.385862,
+                            40.006284
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京华润华亭嘉园停车场)",
+                        "address": "北四环中路六号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.386275,
+                            39.987103
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(华润华亭嘉园)",
+                        "address": "民族园西路3号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.386374,
+                            39.987038
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星汽车充电站(上地国际创业园直流快充1)",
+                        "address": "上地信息路2号国际创业园东区2号楼停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.305951,
+                            40.046046
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京海洋馆(简单冲)",
+                        "address": "高梁桥斜街与交通大学路交叉口西南约120米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.340291,
+                            39.947009
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "隆瑞三优(国家体育馆特13路充电站)",
+                        "address": "规划三路国家体育馆西2门东侧"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.387679,
+                            39.996424
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "万马爱充充电站(辐射安全中心)",
+                        "address": "文慧园北路12号附近"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.363565,
+                            39.95649
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京汽车汽车充电站(莱圳家园1期)",
+                        "address": "清河小营莱圳家园1期地下车库B1层045号-145"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.346114,
+                            40.044063
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京通厦公元99)",
+                        "address": "西三旗街道G6辅路通厦·公元99地上停车场西南侧,飞凡汽车专属车位为南侧2个共享车位为北侧4个"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.336882,
+                            40.046747
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "宝马充电站(北京东升电焊机厂)",
+                        "address": "高粱桥斜街19号-2号楼"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.342391,
+                            39.946345
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "特来电充电站(北京华润峻峰华亭)",
+                        "address": "北辰西路69-1号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.387473,
+                            39.98437
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "瑞智充充电站",
+                        "address": "黑泉路奥林匹克森林公园北园西门停车场"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.375777,
+                            40.027357
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "普天新能源充电站(中关村东升科技园站)",
+                        "address": "高粱桥斜街19号3号楼202室"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.341698,
+                            39.945938
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "驿充电新能源汽车充电站(北京节能大厦聚合创生)",
+                        "address": "西直门北大街42号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.35723,
+                            39.951358
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(金声路)(暂停营业)",
+                        "address": "新街口外大街19号"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.370207,
+                            39.95916
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "北京海淀依斯特大厦充电站",
+                        "address": "依斯特大厦"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.274458,
+                            39.956541
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "国家电网汽车充电站(中关村南大街33号院南)",
+                        "address": ""
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.322631,
+                            39.942959
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "星星充电站(北京怡兴物业管理有限责任公司)",
+                        "address": "后屯中街莱圳家园-南区"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.346908,
+                            40.045195
+                        ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "华商三优汽车充电站(西直门北大街辅路)",
+                        "address": "西直门北大街辅路与文慧园斜街交叉口北60米"
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            116.356309,
+                            39.95046
+                        ]
+                    }
+                }
+            ]
+        }
+        var map = new AMap.Map('map', {
+            zoom: 13.12,
+            showLabel: false,
+            viewMode: '3D',
+            center: [116.316348, 39.992875],
+            mapStyle: 'amap://styles/28f5f1e7774710f2d218ab9ba738b444',
+        });
+
+        var loca = new Loca.Container({
+            map,
+        });
+
+        var labelsLayer = (window.labelsLayer = new Loca.LabelsLayer({
+            zooms: [1, 20],
+        }));
+
+        var geo = new Loca.GeoJSONSource({
+            data: date,
+        });
+        labelsLayer.setSource(geo);
+
+        // labelsLayer.setStyle的配置项即AMap.LabelMarker的配置项
+        labelsLayer.setStyle({
+            icon: {
+                type: 'image',
+                image: 'https://a.amap.com/Loca/static/loca-v2/demos/mock_data/charging_pile.png',
+                size: [48, 75],
+                anchor: 'center',
+            },
+            text: {
+                // 每项配置都可使用回调函数来动态配置
+                content: (index, feat) => {
+                    return feat.properties.name;
+                },
+                style: {
+                    fontSize: 12,
+                    fontWeight: 'normal',
+                    fillColor: '#5CDE8E',
+                    strokeColor: '#000',
+                    strokeWidth: 2,
+                },
+                direction: 'bottom',
+            },
+            extData: (index, feat) => {
+                return feat.properties;
+            },
+        });
+        loca.add(labelsLayer);
+
+        labelsLayer.on('complete', () => {
+            var normalMarker = new AMap.Marker({
+                offset: [70, -15],
+            });
+            var labelMarkers = labelsLayer.getLabelsLayer().getAllOverlays();
+            for (let marker of labelMarkers) {
+                marker.on('mouseover', (e) => {
+                    var position = e.data.data && e.data.data.position;
+
+                    if (position) {
+                        normalMarker.setContent(
+                            '<div class="amap-info-window">地址：' + marker.getExtData().address + '</div>',
+                        );
+                        normalMarker.setPosition(position);
+                        map.add(normalMarker);
+                    }
+                });
+                marker.on('mouseout', () => {
+                    map.remove(normalMarker);
+                });
+                marker.on('click', () => {
+                    console.log('可以在这里进行实时调试，输入代码后按Enter执行')
+                });
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            color: #333;
+            line-height: 2;
+            position: relative;
+            display: inline-block;
+
+        }
+
+        .box span {
+            background: linear-gradient(to right, #7e2f2b, #146420) no-repeat right bottom;
+            background-size: 0% 2px;
+            transition: background-size 1s ease;
+        }
+
+        .box:hover span {
+            background: linear-gradient(to right, #7e2f2b, #146420) no-repeat left bottom;
+            background-size: 100% 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <span>
+            我们在示例域主机上提供 Web 服务，以提供基本的 有关域用途的信息。
+            这些 Web 服务是 尽最大努力提供，但并非旨在支持生产 应用。
+            而偶然的流量配置不正确 应用程序是预期的，请不要设计需要 具有正在运行的 HTTP
+            服务的示例域。
+        </span>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js"></script>
+</head>
+
+<body>
+    <video width="320" height="240" controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        <source src="movie.webm" type="video/webm">
+        <object data="C:\Users\fuzex\Desktop\images\MP4.mp4" width="320" height="240">
+          <embed src="movie.swf" width="320" height="240">
+        </object> 
+      </video>
+    <div data-live-photo data-photo-src="https://p26-passport.byteacctimg.com/img/user-avatar/dbf1c8e3e83cebba3b5df6b84b2bf2b2~60x60.awebp" data-video-src="http://mediastorage.cnr.cn/record/video/cnr/CNRCDP/2023/1226/108d58128d66c1703572797598645210/108d58128d66c1703572797598645210.mp4?auth=a596b1c218fffba205068ab3ab68c819" style="width: 320px; height: 320px">
+    </div>
+    <input id="myFileInput" type="file">
+</body>
+<script>
+    return
+    (function () {
+        var fileInput = document.getElementById("myFileInput");
+        console.log('fileInput', fileInput);
+        var file = fileInput.files[0];
+        console.log('file', file);
+        var reader = new FileReader();
+        console.log('reader', reader);
+        reader.readAsText(file);
+        reader.addEventListener("load", function () {
+            var content = reader.result;
+            console.log('content', content);
+        });
+    })
+
+    // A Player built from a new DIV:
+    const myNewPlayer = LivePhotosKit.Player();
+    document.body.appendChild(myNewPlayer);
+    // A Player built from a pre-existing element:
+    LivePhotosKit.Player(document.getElementById('myExistingElement'));
+
+
+    // Create the player using a pre-existing DOM element.
+    const player = LivePhotosKit.Player(document.getElementById('my-live-photo-target-element'));
+    player.photoSrc = 'https://p26-passport.byteacctimg.com/img/user-avatar/dbf1c8e3e83cebba3b5df6b84b2bf2b2~60x60.awebp';
+    player.videoSrc = 'https://p26-passport.byteacctimg.com/img/user-avatar/dbf1c8e3e83cebba3b5df6b84b2bf2b2~60x60.awebp';
+    // Listen to events the player emits.
+    player.addEventListener('canplay', evt => console.log('player ready', evt));
+    player.addEventListener('error', evt => console.log('player load error', evt));
+    player.addEventListener('ended', evt => console.log('player finished playing through', evt));
+    // Use the playback controls.
+    player.playbackStyle = LivePhotosKit.PlaybackStyle.HINT;
+    player.playbackStyle = LivePhotosKit.PlaybackStyle.FULL;
+    player.play();
+    player.pause();
+    player.toggle();
+    player.stop();
+    // Seek the animation to one quarter through.
+    player.currentTime = 0.25 * player.duration;
+    // Seek the animation to 0.1 seconds into the Live Photo.
+    player.currentTime = 0.1;
+
+    player.addEventListener('error', (ev) => {
+        if (typeof ev.detail.errorCode === 'number') {
+            switch (ev.detail.errorCode) {
+                case LivePhotosKit.Errors.IMAGE_FAILED_TO_LOAD:
+                    // Do something
+                    break;
+                case LivePhotosKit.Errors.VIDEO_FAILED_TO_LOAD:
+                    // Do something
+                    break;
+            }
+        } else {
+            // Extract error.
+            console.error(ev.detail.error);
+        }
+    })
+</script>
+
+</html>

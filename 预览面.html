@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <style>
+    html,
+    body,
+    #container {
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+    <title>多边形的绘制和编辑</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="https://webapi.amap.com/maps?v=2.0&key=b313fdb3684488ba9b6d1891a6f594af&plugin=AMap.PolygonEditor"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<div class="input-card" style="width: 120px">
+   <button class="btn" onclick="polyEditor.open()" style="margin-bottom: 5px">开始编辑</button> 
+   <button class="btn" onclick="polyEditor.close()">结束编辑</button> 
+</div>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+      center: [116.400274, 39.905812],
+      zoom: 14,
+      viewMode: '3D',
+    });
+
+    var path = [
+      [116.403322, 39.920255],
+      [116.410703, 39.897555],
+      [116.402292, 39.892353],
+      [116.389846, 39.891365]
+    ]
+    var path1 = [
+      [116.453322, 39.920255],
+      [116.460703, 39.897555],
+      [116.452292, 39.892353],
+      [116.439846, 39.891365]
+    ]
+
+    var polygon = new AMap.Polygon({
+      path: path,
+      strokeColor: "#FF33FF",
+      strokeWeight: 6,
+      strokeOpacity: 0.2,
+      fillOpacity: 0.4,
+      fillColor: '#1791fc',
+      zIndex: 50,
+      bubble: true,
+    })
+    var polygon1 = new AMap.Polygon({
+      path: path1,
+      strokeColor: "green",
+      strokeWeight: 6,
+      strokeOpacity: 0.2,
+      fillOpacity: 0.4,
+      fillColor: '#1791fc',
+      zIndex: 50,
+      bubble: true,
+
+    })
+
+    map.add([polygon, polygon1])
+
+    // 缩放地图到合适的视野级别
+    map.setFitView()
+    var polyEditor;
+      // var polyEditor = new AMap.PolyEditor(map, polygon)
+      // polyEditor = new AMap.PolygonEditor(map)
+    polyEditor = new AMap.PolygonEditor(map, polygon);
+    polyEditor.addAdsorbPolygons(polygon1)
+    polyEditor.open();
+  </script>
+</body>
+</html>

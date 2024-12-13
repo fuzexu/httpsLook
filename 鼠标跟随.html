@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="createElementdiv">
+
+    </div>
+</body>
+<script>
+    document.addEventListener('mousemove', function (e) {
+        let body = document.querySelector('body');
+        let flower = document.getElementById('createElementdiv');
+        let x = e.offsetX;
+        let y = e.offsetY;
+        console.log(x, y);
+        flower.style.position = 'absolute';
+        flower.style.left = x + 'px';
+        flower.style.top = y + 'px';
+        flower.style.width = 200 + 'px';
+        flower.style.backgroundColor = '#fab';
+        flower.style.height = 20 + 'px';
+        flower.innerText = "12112111231213"
+    });
+
+</script>
+
+</html>

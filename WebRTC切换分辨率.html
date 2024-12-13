@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container">
+        <div id="buttons">
+            <button id="stop">停止</button>
+            <button id="b320">320x240</button>
+            <button id="b240-320">240x320</button>
+            <button id="b640">640x480</button>
+            <button id="b1280">1280x720</button>
+            <button id="b1920">1920x1080</button>
+            <button id="b2048">2048x1152</button>
+        </div>
+        <div id="videoblock" style="display: none">
+            <p id="dimensions" style="height: 1em;"></p>
+            <video playsinline autoplay style="background: none;height: auto;width: auto;"></video>
+            <div id="width">
+                <label>Width <span></span>px:</label>
+                <input type="range" min="0" max="7680" value="0">
+            </div>
+            <input id="isFullWidth" type="checkbox">视频宽度100%<br>
+            <input id="aspectlock" type="checkbox">锁定宽高比<br>
+        </div>
+        <p id="msg" style="display: none;"></p>
+    </div>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script>
+        document.querySelector('#b320').onclick = () => {
+            const c320 = {
+                video: { width: { exact: 320 }, height: { exact: 240 } }
+            };
+            startPlay(c320);
+        };
+        document.querySelector('#b640').onclick = () => {
+            const c640 = {
+                video: { width: { exact: 640 }, height: { exact: 480 } }
+            };
+            startPlay(c640);
+        };
+
+        document.querySelector('#b1280').onclick = () => {
+            const c1280 = {
+                video: { width: { exact: 1280 }, height: { exact: 720 } }
+            };
+            startPlay(c1280);
+        };
+        function startPlay(constraints) {
+            stopStream();
+            // clearMsg();
+            videoblock.style.display = 'none';
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(gotStream)
+                .catch(e => {
+                    showErrMsg('getUserMedia报错 ' + e, JSON.stringify(constraints));
+                });
+        }
+        function stopStream() {
+            if (stream) {
+                stream.getTracks().forEach(track => {
+                    track.stop();
+                });
+            }
+        }
+
+
+        widthInput.onchange = onConstraintChange;
+
+        function onConstraintChange(e) {
+            widthOutput.textContent = e.target.value;
+            const track = window.stream.getVideoTracks()[0];
+            let constraints;
+            if (aspectLock.checked) {
+                constraints = {
+                    width: { exact: e.target.value },
+                    aspectRatio: {
+                        exact: video.videoWidth / video.videoHeight
+                    }
+                };
+            } else {
+                constraints = { width: { exact: e.target.value } };
+            }
+            // clearMsg();
+            console.log('使用配置 ' + JSON.stringify(constraints));
+            track.applyConstraints(constraints)
+                .then(() => {
+                    console.log('配置成功');
+                    displayVideoDimensions('applyConstraints');
+                })
+                .catch(err => {
+                    showErrMsg('配置失败 ', err.name);
+                });
+        }
+    </script>
+</body>
+
+</html>

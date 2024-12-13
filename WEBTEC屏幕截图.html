@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>WebRTC 屏幕截图</title>
+</head>
+<body>
+  <video id="screenVideo" autoplay playsinline></video>
+  <canvas id="screenCanvas" style="display:none;"></canvas>
+  <button id="captureButton">截图</button>
+  <script>
+    const screenVideo = document.getElementById('screenVideo');
+    const screenCanvas = document.getElementById('screenCanvas');
+    const captureButton = document.getElementById('captureButton');
+
+    captureButton.addEventListener('click', async () => {
+      // 获取屏幕流
+      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      screenVideo.srcObject = stream;
+
+      // 等待视频元数据加载完成
+      screenVideo.addEventListener('loadedmetadata', () => {
+        screenCanvas.width = screenVideo.videoWidth;
+        screenCanvas.height = screenVideo.videoHeight;
+        const ctx = screenCanvas.getContext('2d');
+        ctx.drawImage(screenVideo, 0, 0, screenCanvas.width, screenCanvas.height);
+
+        // 将屏幕内容转换为图片数据
+        const imageData = screenCanvas.toDataURL();
+        console.log(imageData);
+
+        // 停止屏幕流
+        stream.getTracks().forEach(track => track.stop());
+      }, { once: true });
+    });
+  </script>
+</body>
+</html>

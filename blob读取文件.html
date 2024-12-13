@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="inputfilename">
+    <button onclick="readWorkbookFromLocalFile()">读取Excel表格</button>
+    <script>
+        function readWorkbookFromLocalFile() {
+            var file = document.getElementById('inputfilename').files[0];
+            var files = document.getElementById('inputfilename');
+
+            console.log('fileBtn',files);
+            console.log('file', file);
+            // 将一段html保存为二进制文件
+            let html = `<h1>hello, world!</h1>`,
+                blob = new Blob([html], { type: 'text/html' });
+            // 保存json数据
+            let json = [{ "name": "张三", "age": 18 }],
+                blob2 = new Blob([JSON.stringify(json)], { type: 'application/json' }); // Blob {size: 28, type: "application/json"}
+            console.log('blob2', blob2);
+            blob2.text().then(value => {
+                console.log('blob2', value); // 我是内容
+            });
+            file.text().then(value => {
+                console.log('file', value);
+            })
+        }
+    </script>
+</body>
+
+</html>

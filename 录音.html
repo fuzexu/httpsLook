@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Speech Example</title>
+  <script>
+    async function speakHello() {
+      try {
+        const url = "https://testsd.cicd.vpclub.cn/gis/public/third/party/proofread/system/app/scenes/file/20240605/1717580071911-rlnwnpgm7.mp3"; // 请替换为实际的音频流URL
+        const response = await fetch(url, {
+          method: 'GET',
+          responseType: 'blob',
+          headers: {
+            'Content-Type': 'application/octet-stream', // 或者根据实际情况设置
+            'Accesstoken':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MTc3NDI5NzgsInVzZXJuYW1lIjoiZ29uZ3h1ZWRpMyJ9.iSQQ7GsPsHZS0Z2gXuaNPXwx4qrRP2DHkcjm8V9A0Z0'
+          },
+        });
+        console.log('response',response);
+        const Audiourl = window.URL.createObjectURL(response);
+        
+        // 创建Audio对象并播放
+        const audio = new Audio(Audiourl);
+        audio.controls = true; // 添加控制条
+        document.body.appendChild(audio);
+        audio.play();
+      } catch (error) {
+        console.error('播放音频时发生错误:', error);
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="speakHello()">播放“你好”</button>
+  <!-- https://testsd.cicd.vpclub.cn/gis/public/third/party/proofread/system/app/scenes/file/20240605/1717580071911-rlnwnpgm7.mp3 -->
+  <audio src="http://47.98.233.31:9000/music/2021/07/19/f79ac891-7d9e-4196-b1b6-acd9802adb06.m4a"></audio>
+</body>
+
+</html>

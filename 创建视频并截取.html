@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>上传视频，进行预览，截取图片，并且获取时长</title>
+  </head>
+  <style>
+    body {
+      display: flex;
+    }
+  </style>
+  <body>
+    <div>
+      <input type="file" onchange="changFile(this)" />
+      <div id="showVideo"></div>
+    </div>
+    <div>
+      <img id="image"  style=" margin: 23px 10px 0 10px;"/>
+    </div>
+    <div>
+      <button onclick="manualCapture()">点击截图</button><br />
+      <canvas id="canvas_"></canvas>
+    </div>
+
+    <script>
+      function changFile(ele) {
+        var videoFile = ele.files[0];
+        var url = URL.createObjectURL(videoFile);
+        // console.log(url);
+        var showVideo = document.getElementById("showVideo");
+        var htmls =
+          ' <video width="400px" id="video" height="auto" autoplay="autoplay" controls > <source src="' +
+          url +
+          '">您的浏览器不支持 HTML5 video 元素。</video>';
+        showVideo.innerHTML = htmls;
+      }
+      function manualCapture() {
+        var video_ = document.getElementById("video");
+        var canvas_ = document.getElementById("canvas_");
+        var ctx_ = canvas_.getContext("2d");
+        const ratio = window.devicePixelRatio || 1;
+        console.log('ratio',ratio);
+        ctx_.scale(ratio, ratio);
+        canvas_.width = video_.offsetWidth * ratio;
+        canvas_.height = video_.offsetHeight * ratio;
+        console.log(video_.clientHeight, video_.clientWidth);
+        ctx_.drawImage(video_, 0, 0, canvas_.width, canvas_.height);
+        var img = document.getElementById("image");
+        console.log(canvas_.toDataURL("image/jpg"));
+        img.src = canvas_.toDataURL("image/jpg");
+      }
+    </script>
+  </body>
+</html>
+
+

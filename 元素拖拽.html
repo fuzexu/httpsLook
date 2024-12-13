@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            border: 1px solid green;
+            position: absolute;
+            left: 300px;
+            top: 150px;
+        }
+
+        .box1,
+        .box2,
+        .box3,
+        .box4 {
+            width: 10px;
+            height: 10px;
+            background-color: green;
+            position: absolute;
+            border-radius: 50%;
+
+        }
+
+        .box1 {
+            top: -5px;
+            left: -5px;
+            cursor: nw-resize;
+        }
+
+        .box2 {
+            /* top: 108px;
+            left: 198px; */
+            top: -5px;
+            right: -5px;
+            cursor: ne-resize;
+        }
+
+        .box3 {
+            left: -5px;
+            bottom: -5px;
+            cursor: sw-resize;
+        }
+
+        .box4 {
+            bottom: -5px;
+            right: -5px;
+            cursor: se-resize;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="box">
+        <span class="box1"></span>
+        <span class="box2"></span>
+        <span class="box3"></span>
+        <span class="box4"></span>
+        <img id="img" src="./geoLocation/static/logo.png" alt="">
+    </div>
+</body>
+<script>
+    // 缩放
+    window.onload = function () {
+        var oDiv = document.getElementsByTagName('div')[0];
+        var aSpan = oDiv.getElementsByTagName('span');
+        // 遍历为每一个span添加上drage事件
+        for (var i = 0; i < aSpan.length; i++) {
+            dragFn(aSpan[i]);
+            setimg()
+        }
+
+        //设置图片宽度
+        function setimg() {
+            // 获取img元素的宽度高度
+            // var Dimg = document.getElementById('img');
+            // console.log('Dimg',Dimg);
+            // console.log('Dimg',document.getElementById('img').style.width);
+
+            // var DimgWidth = Dimg.style.width;
+            // var DimgHeight = Dimg.style.height;
+            // console.log('DimgWidth',DimgWidth);
+            // console.log('DimgHeight',DimgHeight);
+
+            // Dimg.style.width = "120px";
+            // Dimg.style.height = "130px";
+            // 获取img宽度高度
+            // 根据父元素等比例缩放子元素宽度
+        }
+
+
+        function dragFn(obj) {
+            obj.onmousedown = function (e) {
+                var oEv = e || event;
+                //   阻止事件的冒泡
+                oEv.stopPropagation();
+                // 获取移动前盒子的宽高，
+                var oldWidth = oDiv.offsetWidth;
+                var oldHeight = oDiv.offsetHeight;
+                // 获取鼠标距离屏幕的left和top值
+                var oldX = oEv.clientX;
+                var oldY = oEv.clientY;
+
+                // 元素相对于最近的父级定位
+                var oldLeft = oDiv.offsetLeft;
+                var oldTop = oDiv.offsetTop;
+                // 设置最小的宽度
+                var minWidth = 20
+                var minHeight = 20
+                // var minWidth = 50
+                document.onmousemove = function (e) {
+                    var oEv = e || event;
+                    // 左上角
+                    if (obj.className == "box1") {
+                        if (minWidth > oldWidth - (oEv.clientX - oldX)) {
+                            return
+                        } else if (minHeight > oldHeight - (oEv.clientY - oldY)) {
+                            return
+                        }
+                        // 移动后盒子的宽
+                        oDiv.style.width = oldWidth - (oEv.clientX - oldX) + 'px';
+                        // 高度同理
+                        oDiv.style.height = oldHeight - (oEv.clientY - oldY) + 'px';
+                        oDiv.style.left = oldLeft + (oEv.clientX - oldX) + 'px';
+                        oDiv.style.top = oldTop + (oEv.clientY - oldY) + 'px';
+                    } else if (obj.className == "box2") {
+                        // 右上角
+                        if (minWidth > oldWidth - (oEv.clientX - oldX)) {
+                            return
+                        } else if (minHeight > oldHeight - (oEv.clientY - oldY)) {
+                            return
+                        }
+                        oDiv.style.width = oldWidth + (oEv.clientX - oldX) + 'px';
+                        oDiv.style.height = oldHeight - (oEv.clientY - oldY) + 'px';
+                        oDiv.style.right = oldLeft - (oEv.clientX - oldX) + 'px';
+                        oDiv.style.top = oldTop + (oEv.clientY - oldY) + 'px';
+                    } else if (obj.className == "box3") {
+                        // 左下角
+                        if (minWidth > oldWidth - (oEv.clientX - oldX)) {
+                            return
+                        } else if (minHeight > oldHeight - (oEv.clientY - oldY)) {
+                            return
+                        }
+                        oDiv.style.width = oldWidth - (oEv.clientX - oldX) + 'px';
+                        oDiv.style.height = oldHeight + (oEv.clientY - oldY) + 'px';
+                        oDiv.style.left = oldLeft + (oEv.clientX - oldX) + 'px';
+                        oDiv.style.bottom = oldTop + (oEv.clientY + oldY) + 'px';
+                    } else if (obj.className == "box4") {
+                        // 右下角
+                        if (minWidth > oldWidth - (oEv.clientX - oldX)) {
+                            return
+                        } else if (minHeight > oldHeight - (oEv.clientY - oldY)) {
+                            return
+                        }
+                        oDiv.style.width = oldWidth + (oEv.clientX - oldX) + 'px';
+                        oDiv.style.height = oldHeight + (oEv.clientY - oldY) + 'px';
+                        oDiv.style.right = oldLeft - (oEv.clientX - oldX) + 'px';
+                        oDiv.style.bottom = oldTop + (oEv.clientY + oldY) + 'px';
+                        setimg()
+                    }
+
+                }
+                //鼠标抬起时
+                document.onmouseup = function () {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+            }
+        }
+    }
+
+</script>
+
+</html>

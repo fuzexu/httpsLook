@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>面与面的关系</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" type="text/css">
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: '74311c26548eab5f0836a0e58a209ef0',
+        }
+    </script>
+    <!-- <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=b313fdb3684488ba9b6d1891a6f594af"></script> -->
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=2.0&key=b313fdb3684488ba9b6d1891a6f594af&plugin=AMap.Geolocation"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <style>
+        html,
+        body,
+        #container {
+            height: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+
+        latitude
+: 
+36.659382
+longitude
+: 
+116.992225
+     -->
+    <div id="container"></div>
+    <div class='info'>拖动小多边形可调整位置</div>
+    <script type="text/javascript">
+        //初始化地图对象，加载地图
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            zoom: 13
+        });
+        var path1 = [
+            [116.376907, 39.910967],
+            [116.384911, 39.919505],
+            [116.40109, 39.919728],
+            [116.411132, 39.911408],
+            [116.412076, 39.899135],
+            [116.402292, 39.892353],
+            [116.3874, 39.892518],
+            [116.376971, 39.899267]
+        ]
+        var polygon1 = new AMap.Polygon({
+            map: map,
+            fillColor: 'blue',
+            fillOpacity: 0.3,
+            path: path1,
+        })
+        var path2 = [
+            [116.390233, 39.906602],
+            [116.395254, 39.908668],
+            [116.400661, 39.906667],
+            [116.400962, 39.898589],
+            [116.395769, 39.894855],
+            [116.390147, 39.898049],
+        ]
+        var polygon2 = new AMap.Polygon({
+            map: map,
+            fillColor: 'red',
+            fillOpacity: 0.3,
+            path: path2,
+            draggable: true
+        })
+        var textBox = new AMap.Text({
+            map: map,
+            position: new AMap.LngLat(116.40109, 39.919728),
+            offset: new AMap.Pixel(-20, -40),
+            style: {
+                'background-color': 'yellow',
+                'border': 'solid 1px #0088ff',
+                'padding': '10px 20px'
+            }
+        })
+        function compute() {
+            var polygon1_path = polygon1.getPath();
+            var polygon2_path = polygon2.getPath();
+            // 小圈是否在大圈内
+            var isRingInRing = AMap.GeometryUtil.isRingInRing(polygon2_path, polygon1_path);
+            // 两圈是否交叉
+            var doesRingRingIntersect = AMap.GeometryUtil.doesRingRingIntersect(polygon2_path, polygon1_path);
+            var ringRingClip = AMap.GeometryUtil.ringRingClip(polygon2_path, polygon1_path);
+            var ringArea = parseInt(AMap.GeometryUtil.ringArea(ringRingClip))
+
+            var text = '两圈关系：在大圈外';
+            if (isRingInRing) {
+                text = '两圈关系：在大圈内';
+            } else if (doesRingRingIntersect) {
+                text = '两圈关系：两圈相交, 交叉区域面积为' + ringArea + '平方米';
+            }
+            textBox.setText(text)
+        }
+        compute();
+        polygon2.on('dragend', compute)
+        map.setFitView();
+    </script>
+</body>
+
+</html>

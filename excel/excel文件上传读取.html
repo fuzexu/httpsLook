@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file" id="inputfilename"> <!--选择文件的input-->
+
+    <button onclick="readWorkbookFromLocalFile()">读取Excel表格</button> <!--读取文件的按钮-->
+
+    <div id="result"></div> <!--显示所读取excel的区域-->
+
+</body>
+<script src="./xlsx.core.min.js"></script>
+<script>
+
+    function parseXlsxFile(file) {
+        var data
+        console.log('window.ActiveXObject', window.ActiveXObject);
+        if (window.ActiveXObject) {
+            //支持-通过ActiveXObject的一个新实例来创建XMLHttpRequest对象
+            var xml = new ActiveXObject("MSXML2.DOMDocument");
+            xml.async = false;
+            xml.load(file);
+            var sheets = xml.getElementsByTagName("Worksheet");
+            data = [];
+            for (var i = 0; i < sheets.length; i++) {
+                var rows = sheets[i].getElementsByTagName("Row");
+                for (var j = 0; j < rows.length; j++) {
+                    var cells = rows[j].getElementsByTagName("Cell");
+                    var rowData = [];
+                    for (var k = 0; k < cells.length; k++) {
+                        rowData.push(cells[k].text);
+                    }
+                    data.push(rowData);
+                }
+            }
+        }
+        return data;
+    }
+    function readWorkbookFromLocalFile() {
+        console.log(document.getElementById('inputfilename'));
+        var file = document.getElementById('inputfilename').files[0];
+        console.log('file', file);
+        console.log(parseXlsxFile(file));
+        return
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                console.log('data',data);
+                var workbook = XLSX.read(data, { //XLSX.read()方法会返回一个workbook 对象
+                    type: 'binary'
+                });
+                var sheetNames = workbook.SheetNames; // 工作表名称集合
+                var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet的内容
+                json = XLSX.utils.sheet_to_json(worksheet);
+                console.log('json', json);
+            };
+            reader.readAsBinaryString(file);
+
+        } else {
+            alert('请先选择文件');
+        }
+    }
+</script>
+
+</html>

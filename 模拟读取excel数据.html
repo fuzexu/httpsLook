@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../excel/xlsx.core.min.js"></script>
+</head>
+
+<body>
+    <input type="file" id="inputfilename"> <!--选择文件的input-->
+
+    <button onclick="readWorkbookFromLocalFile()">读取Excel表格</button> <!--读取文件的按钮-->
+    <script>
+        function readWorkbookFromLocalFile() {
+            var file = document.getElementById('inputfilename').files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var data = e.target.result;
+                    console.log(data);
+                    var workbook = XLSX.read(data, { //XLSX.read()方法会返回一个workbook 对象
+                        type: 'binary'
+                    });
+                    console.log(workbook);
+                    var json = null;
+                    var csv = '';
+                    var sheetNames = workbook.SheetNames; // 工作表名称集合
+                    var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet的内容
+                    json = XLSX.utils.sheet_to_json(worksheet);
+                    console.log('json', json);
+                };
+                reader.readAsBinaryString(file);
+
+            } else {
+                alert('请先选择文件');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>拖放示例-文本</title>
+</head>
+<style>
+    #moveable-div{
+        width: 200px;
+        height: 200px;
+        background-color: #fab;
+    }
+</style>
+
+<body>
+    <div id="moveable-div">
+    </div>
+    <script>
+        let div = document.getElementById('moveable-div');
+        makeItMoveable(div);
+
+        function makeItMoveable(elem) {
+            let body = document.body;
+            let move_enable = false;
+            let offsetLeft; // 上次鼠标点击位置到左边的距离
+            let offsetTop;  // 上次鼠标点击位置到上边的距离
+            elem.addEventListener('mousedown', (e) => {
+                offsetLeft = e.clientX;
+                offsetTop = e.clientY;
+                move_enable = true;
+            })
+
+            // 需要在body上监听移动事件，而不是被移动的元素上，否则移动得过快可能鼠标会滑出div，就移不动了
+            body.addEventListener('mousemove', (e) => {
+                console.log(move_enable)
+                if (move_enable) {
+                    // 计算位移
+                    let dx = e.clientX - offsetLeft;
+                    let dy = e.clientY - offsetTop;
+                    let cx = elem.offsetLeft + dx;
+                    let cy = elem.offsetTop + dy;
+                    elem.style.setProperty('left', cx + 'px');
+                    elem.style.setProperty('top', cy + 'px');
+
+                    offsetLeft = e.clientX;
+                    offsetTop = e.clientY;
+                }
+            })
+
+            body.addEventListener('mouseup', (e) => {
+                move_enable = false;
+            })
+        }
+
+    </script>
+</body>
+
+</html>

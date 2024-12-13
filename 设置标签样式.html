@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>设置点标注的文本标签</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+        html,
+        body,
+        #container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .amap-icon img {
+            width: 25px;
+            height: 34px;
+        }
+
+        .amap-marker-label {
+            display: flex;
+            padding: 4px 8px;
+            align-items: center;
+            gap: 10px;
+            color: var(----Grey-Blue-15, #131926) !important;
+            text-align: center;
+            font-family: "PingFang SC";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            border-radius: 2px;
+            border: 1px solid var(--Neutral-5, #d9d9d9);
+            background: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+            backdrop-filter: blur(32px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <!-- <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=b313fdb3684488ba9b6d1891a6f594af"></script> -->
+    <script type="text/javascript" src="./jsapi.js"></script>
+    <script type="text/javascript">
+        var map = new AMap.Map('container', {
+            resizeEnable: true,
+            center: [116.397428, 39.90923],
+            zoom: 13
+        });
+
+        var marker = new AMap.Marker({
+            // map: map,
+            position: map.getCenter(),
+            icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
+            anchor: 'bottom-center',
+            offset: new AMap.Pixel(0, 0)
+        });
+        // 设置label标签
+        // label默认蓝框白底左上角显示，样式className为：amap-marker-label
+        for (let index = 0; index < 10; index++) {
+            if (index == 9) {
+                marker.setLabel({
+                    direction: 'right',
+                    offset: new AMap.Pixel(10, 0),  //设置文本标注偏移量
+                    content: index, //设置文本标注内容
+                });
+            }
+        }
+        map.add(marker)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>测试</title>
+</head>
+
+<body>
+    <button id="btn">计算</button>
+    <button id="play">播放</button>
+    <p draggable="true" id="html-drag-box-container"
+        ondragstart="event.dataTransfer.setData('text/plain', 'This text may be dragged')">
+        This text <strong>may</strong> be dragged.
+    </p>
+    <input type="file" capture="camera" accept="image">
+    <script>
+        document.getElementById('play').onclick = function () {
+            const audio = new Audio("https://testsd.cicd.vpclub.cn/gis/public/third/party/proofread/system/app/scenes/file/20240611/1718074745729-dylopsdj4vu.mp3");
+            document.body.appendChild(audio);
+            audio.play();
+        }
+        let boxcontainer = document.getElementById('html-drag-box-container');
+        dragimg.addEventListener('dragstart', onDragStart);
+        dragimg.addEventListener('dragend', onDragEnd);
+        function onDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.className);
+            e.target.style.opacity = .7;
+        }
+
+        function onDragEnd(e) {
+            e.target.style.opacity = "";
+        }
+    </script>
+    <!-- <audio ref="audio" id="audioPlayer" controls>
+        <source id="audioSource" src="https://testsd.cicd.vpclub.cn/gis/public/third/party/proofread/system/app/scenes/file/20240611/1718074745729-dylopsdj4vu.mp3">
+        this.$set(item, 'url', path.data + '/gis/public/third/party/proofread/system/app/scenes/file/' + item.minioPath)
+
+    </audio> -->
+    <!-- <script>
+        document.getElementById('play').onclick = function () {
+            // var audio = document.getElementById('myAudio');
+            // audio.play();
+        }
+        document.getElementById('btn').onclick = function () {
+            getData();
+        }
+
+        function getData() {
+            // 获取数据
+            var url = 'https://testsd.cicd.vpclub.cn/gis/public/third/party/proofread/system/app/scenes/file/20240605/1717580071911-rlnwnpgm7.mp3'
+
+            // 发送请求
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', url);
+            xhr.responseType = 'blob';
+            xhr.setRequestHeader('Content-Type', 'audio/mp4'); 
+            xhr.setRequestHeader('Accesstoken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MTc3NTgzMDMsInVzZXJuYW1lIjoiZ29uZ3h1ZWRpMyJ9.vuHx9mIa__InemG1DMLpkm_fsYYkVetp8tfmH8QwsWY');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.response);
+                    // 创建Audio对象并播放
+                    const Audiourl = window.URL.createObjectURL(xhr.response);
+                    const audio = new Audio(Audiourl);
+                    audio.preload = 'auto';
+                    audio.nodeType = 'audio/mpeg';
+                    audio.controls = true; // 添加控制条
+                    document.body.appendChild(audio);
+                    audio.play();
+                    // var audioSource = document.getElementById('audioSource');
+                    // audioSource.type = 'audio/mpeg'; // 或在实际需要时设置
+                    // audioSource.src = Audiourl;
+                }
+            }
+            xhr.send();
+        }
+    </script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.1/eruda.min.js"></script>
+    // 初始化
+    <script>eruda.init()</script>
+</body>
+
+</html>

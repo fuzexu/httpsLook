@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const tableRows = [
+        ['姓名', '手机号', '部门'], // 第一行就是表格表头
+        ['尤与西', '131xxxx', '技术部'],
+        ['阮易枫', '158xxxx', '技术部'],
+        ['廖学丰', '189xxxx', '技术部']
+    ]
+    // 构造数据字符，换行需要用\r\n
+    // let CsvString = tableRows.map(data => data.join(',')).join('\r\n');
+    // 加上 CSV 文件头标识
+    // CsvString = "data:application/vnd.ms-excel;charset=utf-8,\uFEFF" + '姓名,手机号,部门\r\n尤与西,131xxxx,技术部\r\n阮易枫,158xxxx,技术部\r\n廖学丰,189xxxx,技术部';
+    // 通过创建a标签下载
+    // const link = document.createElement('a');
+    // link.href = CsvString;
+    // 对下载的文件命名
+    // link.download = `技术部顶级员工列表.csv`;
+    // 模拟点击下载
+    window.location.href = "data:application/vnd.ms-excel;charset=utf-8,\uFEFF" + '姓名,手机号,部门\r\n尤与西,131xxxx,技术部\r\n阮易枫,158xxxx,技术部\r\n廖学丰,189xxxx,技术部';
+    // link.click();
+    // 移除a标签
+    // link.remove();
+</script>
+
+</html>

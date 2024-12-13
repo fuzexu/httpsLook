@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .animated-element {
+            position: absolute;
+            width: 50px;
+            /* 请根据需要设定元素的宽度 */
+            height: 50px;
+            /* 以及高度 */
+            background-color: red;
+            /* 示例颜色，可自定义 */
+            animation: slideRight 1s forwards;
+            /* 动画名称、持续时间和填充模式 */
+        }
+
+        /* 定义关键帧动画 */
+        @keyframes slideRight {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="animated-element" />
+    </div>
+</body>
+
+</html>

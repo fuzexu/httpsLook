@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>位置经纬度 + 驾车规划路线</title>
+    <style type="text/css">
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <style type="text/css">
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+
+        #panel .amap-call {
+            background-color: #009cf9;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        #panel .amap-lib-driving {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            overflow: hidden;
+        }
+    </style>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script>
+        window._AMapSecurityConfig = {
+            securityJsCode: '74311c26548eab5f0836a0e58a209ef0',
+        }
+    </script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=2.0&key=b313fdb3684488ba9b6d1891a6f594af&plugin=AMap.Driving,AMap.ToolBar,AMap.Autocomplete,AMap.PlaceSearch"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+</head>
+
+<body>
+    <div id="container"></div>
+    <div class="info" id="text">
+        <input type="text" id="start" placeholder="单击左键获取起点位置">
+        <input type="text" id="end" placeholder="单击右键获取终点位置">
+        <button id="btn">查询路线</button>
+    </div>
+    <div id="panel"></div>
+    <script type="text/javascript">
+        var map, route, marker;
+        //基本地图加载
+        map = new AMap.Map("container", {
+            resizeEnable: true
+        });
+        var arr = new Array();//经纬度坐标数组
+        arr.push(new AMap.LngLat("116.403322", "39.920255")); //初始的导航起点
+        arr.push(new AMap.LngLat("116.420703", "39.897555")); //初始的导航途经点
+        arr.push(new AMap.LngLat("116.430703", "39.897555")); //初始的导航途经点
+        arr.push(new AMap.LngLat("116.410703", "39.897555")); //初始的导航终点
+        AMap.plugin(['AMap.DragRoute'], function () {
+            dragRoute = new AMap.DragRoute(map, arr, AMap.DrivingPolicy.LEAST_FEE);
+            dragRoute.search(); //查询导航路径并开启拖拽导航
+        });
+    </script>
+</body>
+
+</html>

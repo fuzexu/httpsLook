@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>自定义点标记</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+        html,
+        body,
+        #container {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" style="width: 200px;height: 200px;background-color: #fff;">
+    </div>
+    <script type="text/javascript" src="http://134.80.208.29:51005/gis/gd/api/ie/amap-jsapi.js"></script>
+    <!-- <script type="text/javascript" src="https://134.80.173.9/gis/public/gd/api/ie/amap-jsapi.js"></script> -->
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var xyzTileLayer = new AMap.TileLayer({
+                getTileUrl: function (x, y, z) {
+                    var str = ['', '01', '02', '03', '04'];
+                    var a = 'http://134.80.208.29:51005/gis/gd/api/appmaptile?x=' + x + '&y=' + y + '&z=' + z;
+                    return a.replace('{}', str[(x + y) % 5]);
+                },
+                zIndex: 1
+            });
+
+            var map = new AMap.Map("container", {
+                center: [117.023454, 36.675156],
+                layers: [xyzTileLayer],
+                zoom: 15
+            });
+        }
+    </script>
+</body>
+
+</html>

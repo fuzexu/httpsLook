@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>测试</title>
+</head>
+
+<body>
+    <div id="btn1">跳转1</div>
+    <div id="btn2">跳转2</div>
+    <div id="btn3">跳转3</div>
+    <script>
+        // encodeURIComponent
+        // decodeURIComponent
+        // let dataCode = '9pdJAQCGoYhahRqMIbyBKB/YnzdL24+G6dBwoC2obe2JN2cJhJiyhO80HTAlVYv1Jn6ZcPrvXwyZ06WAHildfw=='
+
+        let dataCode = 'uCSI897Ux/550XE9LUk9aYcs61ENWhd7KZZGeNshSlKJH2aFIcSwHlbJxh339pEU'
+        let NewdecodeURIComponent = encodeURIComponent(dataCode)
+        document.getElementById('btn1').onclick = function () {
+            window.open('https://testsd.cicd.vpclub.cn/gis/address/order/webapp/#/poiAdd?dataCode=' + NewdecodeURIComponent, "_blank");
+        }
+        document.getElementById('btn2').onclick = function () {
+            window.open('https://testsd.cicd.vpclub.cn/gis/address/order/webapp/#/poiAdd?dataCode=' + dataCode, "_blank");
+        }
+        document.getElementById('btn3').onclick = function () {
+            window.open('http://localhost:5000/gis/address/order/webapp/#/poiAdd?dataCode=XYapmPldXnpLC7FufLw6ZLFpjxA2cgbITYr7rOQCD%20jEm8%20ygQ562duOBJln1AVL', "_blank");
+        }
+    </script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.0.1/eruda.min.js"></script>
+    // 初始化
+    <script>eruda.init()</script>
+</body>
+
+</html>

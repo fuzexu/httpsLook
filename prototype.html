@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function Person() {
+        }
+        // 可以使用Person.prototype 直接访问到原型对象
+        //给Person函数的原型对象中添加一个属性 name并且值是 "张三"
+        Person.prototype.name = "张三";
+        Person.prototype.age = 20;
+
+        var p1 = new Person();
+        /*
+            访问p1对象的属性name，虽然在p1对象中我们并没有明确的添加属性name，但是
+            p1的 [[prototype]] 属性指向的原型中有name属性，所以这个地方可以访问到属性name
+            就值。
+            注意：这个时候不能通过p1对象删除name属性，因为只能删除在p1中删除的对象。
+        */
+        alert(p1.name);  // 张三
+
+        var p2 = new Person();
+        alert(p2.name);  // 张三  都是从原型中找到的，所以一样。
+
+        alert(p1.name === p2.name);  // true
+
+        // 由于不能修改原型中的值，则这种方法就直接在p1中添加了一个新的属性name，然后在p1中无法再访问到
+        //原型中的属性。
+        p1.name = "李四";
+        alert("p1：" + p1.name);
+        // 由于p2中没有name属性，则对p2来说仍然是访问的原型中的属性。    
+        alert("p2:" + p2.name);  // 张三  
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <title>标注和标注图层</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <style>
+        html,
+        body,
+        #container {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=2.0&key=b313fdb3684488ba9b6d1891a6f594af&plugin=AMap.Geolocation"></script>
+    <script type="module">
+        import {
+            data1,
+            data2,
+            data3,
+            data4,
+            data5,
+            data6,
+            data7,
+        } from "./LabelsLayer.js";
+        console.log('data1', data1);
+        // 设置一个图标对象
+        var icon = {
+            // 图标类型，现阶段只支持 image 类型
+            type: 'image',
+            // 图片 url
+            image:
+                'https://a.amap.com/jsapi_demos/static/demo-center/marker/express2.png',
+            // 图片尺寸
+            size: [64, 30],
+            // 图片相对 position 的锚点，默认为 bottom-center
+            anchor: 'center',
+        };
+        var textStyle = {
+            fontSize: 12,
+            fontWeight: 'normal',
+            fillColor: '#22886f',
+            strokeColor: '#fff',
+            strokeWidth: 2,
+            fold: true,
+            padding: '2, 5',
+        };
+        var LabelsData = []
+        data1.data.records.forEach((item, index) => {
+            LabelsData.push({
+                poiId: item.poiId,
+                name: item.poiName,
+                position: [item.poiLng, item.poiLat],
+                zooms: [10, 20],
+                opacity: 1,
+                zIndex: index + 1,
+                icon,
+                text: {
+                    content: item.address,
+                    direction: 'right',
+                    offset: [-20, -5],
+                    style: textStyle,
+                },
+            })
+        })
+        data2.data.records.forEach((item, index) => {
+            LabelsData.push({
+                poiId: item.poiId,
+                name: item.poiName,
+                position: [item.poiLng, item.poiLat],
+                zooms: [10, 20],
+                opacity: 1,
+                zIndex: index + 1,
+                icon,
+                text: {
+                    content: item.address,
+                    direction: 'right',
+                    offset: [-20, -5],
+                    style: textStyle,
+                },
+            })
+        })
+        data3.data.records.forEach((item, index) => {
+            LabelsData.push({
+                poiId: item.poiId,
+                name: item.poiName,
+                position: [item.poiLng, item.poiLat],
+                zooms: [10, 20],
+                opacity: 1,
+                zIndex: index + 1,
+                icon,
+                text: {
+                    content: item.address,
+                    direction: 'right',
+                    offset: [-20, -5],
+                    style: textStyle,
+                },
+            })
+        })
+        data4.data.records.forEach((item, index) => {
+            LabelsData.push({
+                poiId: item.poiId,
+                name: item.poiName,
+                position: [item.poiLng, item.poiLat],
+                zooms: [10, 20],
+                opacity: 1,
+                zIndex: index + 1,
+                icon,
+                text: {
+                    content: item.address,
+                    direction: 'right',
+                    offset: [-20, -5],
+                    style: textStyle,
+                },
+            })
+        })
+        data5.data.records.forEach((item, index) => {
+            LabelsData.push({
+                poiId: item.poiId,
+                name: item.poiName,
+                position: [item.poiLng, item.poiLat],
+                zooms: [10, 20],
+                opacity: 1,
+                zIndex: index + 1,
+                icon,
+                text: {
+                    content: item.address,
+                    direction: 'right',
+                    offset: [-20, -5],
+                    style: textStyle,
+                },
+            })
+        })
+        data6.data.records.forEach((item, index) => {
+            LabelsData.push({
+                poiId: item.poiId,
+                name: item.name,
+                position: [item.point.lon, item.point.lat],
+                zooms: [10, 20],
+                opacity: 1,
+                zIndex: index + 1,
+                icon,
+                text: {
+                    content: item.type,
+                    direction: 'right',
+                    offset: [-20, -5],
+                    style: textStyle,
+                },
+            })
+        })
+        data7.data.records.forEach((item, index) => {
+            LabelsData.push({
+                poiId: item.poiId,
+                name: item.name,
+                position: [item.point.lon, item.point.lat],
+                zooms: [10, 20],
+                opacity: 1,
+                zIndex: index + 1,
+                icon,
+                text: {
+                    content: item.type,
+                    direction: 'right',
+                    offset: [-20, -5],
+                    style: textStyle,
+                },
+            })
+        })
+
+        // var LabelsData = [
+        //     {
+        //         name: '自提点1',
+        //         position: [116.461009, 39.991443],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 10,
+        //         fold: true,
+        //         icon,
+        //         text: {
+        //             // 要展示的文字内容
+        //             content: '中邮速递易',
+        //             // 文字方向，有 icon 时为围绕文字的方向，没有 icon 时，则为相对 position 的位置
+        //             direction: 'right',
+        //             // 在 direction 基础上的偏移量
+        //             offset: [-20, -5],
+        //             // 文字样式
+        //             style: {
+        //                 // 字体大小
+        //                 fontSize: 12,
+        //                 // 字体颜色
+        //                 fillColor: '#22886f',
+        //                 //
+        //                 strokeColor: '#fff',
+        //                 strokeWidth: 2,
+        //                 fold: true,
+        //                 padding: '2, 5',
+        //             },
+        //         },
+        //     },
+        //     {
+        //         name: '自提点2',
+        //         position: [116.466994, 39.984904],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 16,
+        //         icon,
+        //         text: {
+        //             content: '丰巢快递柜-花家地北里',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        //     {
+        //         name: '自提点3',
+        //         position: [116.472914, 39.987093],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 8,
+        //         icon,
+        //         text: {
+        //             content: '丰巢快递柜-中环南路11号院',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        //     {
+        //         name: '自提点4',
+        //         position: [116.471814, 39.995856],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 23,
+        //         icon,
+        //         text: {
+        //             content: '丰巢快递柜-合生麒麟社',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        //     {
+        //         name: '自提点5',
+        //         position: [116.469639, 39.986889],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 6,
+        //         icon,
+        //         text: {
+        //             content: '速递易快递柜-望京大厦',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        //     {
+        //         name: '自提点6',
+        //         position: [116.467361, 39.996361],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 5,
+        //         icon,
+        //         text: {
+        //             content: 'E栈快递柜-夏都家园',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        //     {
+        //         name: '自提点7',
+        //         position: [116.462327, 39.996071],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 4,
+        //         icon,
+        //         text: {
+        //             content: '丰巢自提柜-圣馨大地家园',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        //     {
+        //         name: '自提点8',
+        //         position: [116.462349, 39.996067],
+        //         zooms: [10, 20],
+        //         opacity: 1,
+        //         zIndex: 3,
+        //         icon,
+        //         text: {
+        //             content: '丰巢快递-圣馨大地家园',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        //     {
+        //         name: '自提点9',
+        //         position: [116.456474, 39.991563],
+        //         zooms: [10, 20],
+        //         zIndex: 2,
+        //         opacity: 1,
+        //         icon,
+        //         text: {
+        //             content: 'E栈快递柜-南湖渠西里',
+        //             direction: 'right',
+        //             offset: [-20, -5],
+        //             style: textStyle,
+        //         },
+        //     },
+        // ];
+        var map = new AMap.Map('container', {
+            zoom: 15.8,
+            center: [119.161721, 36.707668],
+            showIndoorMap: false,
+        });
+        var markers = [];
+        var layer = new AMap.LabelsLayer({
+            zooms: [3, 20],
+            zIndex: 1000,
+        });
+        layer.add(markers);
+        // 图层添加到地图
+        map.add(layer);
+        // 初始化 labelMarker
+        for (var i = 0; i < LabelsData.length; i++) {
+            var curData = LabelsData[i];
+            curData.extData = {
+                index: i,
+                ...curData
+            };
+            var labelMarker = new AMap.LabelMarker(curData);
+            labelMarker.on('click', (e) => {
+                console.log('触发地图鼠标左键单击事件', e.target._opts.extData);
+            });
+            markers.push(labelMarker);
+        }
+        // 将 marker 添加到图层
+        layer.add(markers);
+        map.setFitView(null, false, [100, 150, 10, 10]);
+    </script>
+</body>
+
+</html>
